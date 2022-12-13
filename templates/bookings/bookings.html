@@ -1,39 +1,66 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<section class="section">
-    <div class="container">
-        <h2 class="title-page text-center">Welcome to HST Meeting Room Booking System</h2>
+<div class="container">
+    <div class="row">
+        <div class="col mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Booking Page</li>
+                </ol>
+            </nav>
+        </div>
     </div>
-</section>
-    <div class="container">
+</div>
+<br>
+<div class="container">
+    <div class="row mx-auto">
+        <div class="col mx-auto">
+            <h2 class="title-page text-center">Welcome to HST Meeting Room Booking System</h2>
+        </div>
+    </div>
+    {% if user.is_booking_superadmin %}
+    <br>
+    <div class="row mx-auto text-center">
+        <div class="col mx-auto">
+            <a href="{% url 'view_rooms' %}" class="btn btn-outline-primary">Manage Room</a>
+        </div>
+        <div class="col mx-auto">
+            <a href="{% url 'view_available_times' %}" class="btn btn-outline-primary">Manage Time</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<br>
+<div class="container">
     <div class="row">
         <main class="col-md-9">
-    
-    <header class="border-bottom mb-4 pb-3">
-            <div class="form-inline">
-                <span class="mr-md-auto"><b>{{ rooms_count }}</b> rooms found </span>
-            </div>
-    </header>
-    <div class="row">
-        {% for room in rooms %}
-        <div class="col-md-4">
-            <figure class="card card-product-grid">
-                <div class="img-wrap"> 
-                    <img src="{{ room.images.url }}">
-                </div> <!-- img-wrap.// -->
-                <figcaption class="info-wrap">
-                    <div class="fix-height">
-                        <a href="#" class="title">{{ room.name }}</a>
-                        <small>{{ room.address }}</small>
-                    </div>
-                    <a href="{% url 'view_room_information' room.id %}" class="btn btn-block btn-primary">See Room Information</a>
-                </figcaption>
-            </figure>
-        </div> <!-- col.// -->
-        {% endfor %}
-    </div> <!-- row end.// -->
+            <header class="border-bottom mb-4 pb-3">
+                <div class="form-inline">
+                    <span class="mr-md-auto"><b>{{ rooms_count }}</b> rooms found </span>
+                </div>
+            </header>
+            <div class="row">
+                {% for room in rooms %}
+                <div class="col-md-4">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap">
+                            <img src="{{ room.images.url }}">
+                        </div> <!-- img-wrap.// -->
+                        <figcaption class="info-wrap">
+                            <div class="fix-height">
+                                <a href="#" class="title">{{ room.name }}</a>
+                                <small>{{ room.address }}</small>
+                            </div>
+                            <a href="{% url 'view_room_information' room.id %}" class="btn btn-block btn-primary">See
+                                Room Information</a>
+                        </figcaption>
+                    </figure>
+                </div> <!-- col.// -->
+                {% endfor %}
+            </div> <!-- row end.// -->
         </main> <!-- col.// -->
     </div>
-    </div> <!-- container .//  -->
+</div> <!-- container .//  -->
 {% endblock %}

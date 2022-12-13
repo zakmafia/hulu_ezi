@@ -20,35 +20,41 @@ def helpdesk_home(request):
 # Priority
 @login_required(login_url='login')
 def create_priority(request):
-    if request.method == 'POST':
-        form = PriorityForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You have sucessfully created a status')
-            return redirect('create_priority')
+    if request.user.is_helpdesk_superadmin:
+        if request.method == 'POST':
+            form = PriorityForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have sucessfully created a status')
+                return redirect('create_priority')
+            else:
+                messages.error(request, 'This priority already exists')
         else:
-            messages.error(request, 'This priority already exists')
-    else:
-        form = PriorityForm
+            form = PriorityForm
 
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/create_priority.html', context)
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/create_priority.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def view_priority(request):
-    priorities = Priority.objects.all()
-    context = {
-        'current_year': current_year,
-        'priorities': priorities
-    }
-    return render(request, 'helpdesk/view_priority.html', context)
+    if request.user.is_helpdesk_superadmin:
+        priorities = Priority.objects.all()
+        context = {
+            'current_year': current_year,
+            'priorities': priorities
+        }
+        return render(request, 'helpdesk/view_priority.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def delete_priority(request, priority_id):
-    if request.user.is_superadmin:
+    if request.user.is_helpdesk_superadmin:
         priority = Priority.objects.get(id=priority_id)
         priority.delete()
         messages.success(request, 'You have successfully deleted the priority!')
@@ -59,35 +65,41 @@ def delete_priority(request, priority_id):
 # Role
 @login_required(login_url='login')
 def create_role(request):
-    if request.method == 'POST':
-        form = RoleForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You have sucessfully created a role')
-            return redirect('create_role')
+    if request.user.is_helpdesk_superadmin:
+        if request.method == 'POST':
+            form = RoleForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have sucessfully created a role')
+                return redirect('create_role')
+            else:
+                messages.error(request, 'This role already exists')
         else:
-            messages.error(request, 'This role already exists')
-    else:
-        form = RoleForm
+            form = RoleForm
 
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/create_role.html', context)
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/create_role.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def view_role(request):
-    roles = Role.objects.all()
-    context = {
-        'current_year': current_year,
-        'roles': roles
-    }
-    return render(request, 'helpdesk/view_role.html', context)
+    if request.user.is_helpdesk_superadmin:
+        roles = Role.objects.all()
+        context = {
+            'current_year': current_year,
+            'roles': roles
+        }
+        return render(request, 'helpdesk/view_role.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def delete_role(request, role_id):
-    if request.user.is_superadmin:
+    if request.user.is_helpdesk_superadmin:
         role = Role.objects.get(id=role_id)
         role.delete()
         messages.success(request, 'You have successfully deleted the role!')
@@ -98,35 +110,41 @@ def delete_role(request, role_id):
 # Staff
 @login_required(login_url='login')
 def create_staff(request):
-    if request.method == 'POST':
-        form = StaffForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You have sucessfully created a staff')
-            return redirect('create_staff')
+    if request.user.is_helpdesk_superadmin:
+        if request.method == 'POST':
+            form = StaffForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have sucessfully created a staff')
+                return redirect('create_staff')
+            else:
+                messages.error(request, 'This staff already exists')
         else:
-            messages.error(request, 'This staff already exists')
-    else:
-        form = StaffForm
+            form = StaffForm
 
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/create_staff.html', context)
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/create_staff.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def view_staff(request):
-    staff_list = Staff.objects.all()
-    context = {
-        'current_year': current_year,
-        'staff_list': staff_list,
-    }
-    return render(request, 'helpdesk/view_staff.html', context)
+    if request.user.is_helpdesk_superadmin:
+        staff_list = Staff.objects.all()
+        context = {
+            'current_year': current_year,
+            'staff_list': staff_list,
+        }
+        return render(request, 'helpdesk/view_staff.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def delete_staff(request, staff_id):
-    if request.user.is_superadmin:
+    if request.user.is_helpdesk_superadmin:
         staff_member = Staff.objects.get(id=staff_id)
         staff_member.delete()
         messages.success(request, 'You have successfully deleted the staff member!')
@@ -137,35 +155,41 @@ def delete_staff(request, staff_id):
 # Issue
 @login_required(login_url='login')
 def create_issue(request):
-    if request.method == 'POST':
-        form = IssueForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You have sucessfully created an issue')
-            return redirect('create_issue')
+    if request.user.is_helpdesk_superadmin:
+        if request.method == 'POST':
+            form = IssueForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have sucessfully created an issue')
+                return redirect('create_issue')
+            else:
+                messages.error(request, 'This issue already exists')
         else:
-            messages.error(request, 'This issue already exists')
-    else:
-        form = IssueForm
+            form = IssueForm
 
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/create_issue.html', context)
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/create_issue.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def view_issue(request):
-    issues = Issue.objects.all()
-    context = {
-        'current_year': current_year,
-        'issues': issues
-    }
-    return render(request, 'helpdesk/view_issue.html', context)
+    if request.user.is_helpdesk_superadmin:
+        issues = Issue.objects.all()
+        context = {
+            'current_year': current_year,
+            'issues': issues
+        }
+        return render(request, 'helpdesk/view_issue.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def delete_issue(request, issue_id):
-    if request.user.is_superadmin:
+    if request.user.is_helpdesk_superadmin:
         issue = Issue.objects.get(id=issue_id)
         issue.delete()
         messages.success(request, 'You have successfully deleted the issue!')
@@ -207,83 +231,95 @@ def my_request(request):
 
 @login_required(login_url='login')
 def view_user_request(request):
-    all_requests = UserRequest.objects.all().order_by('-id')
-    context = {
-        'current_year': current_year,
-        'all_requests': all_requests,
-    }
-    return render(request, 'helpdesk/view_user_request.html', context)
+    if request.user.is_helpdesk_admin:
+        all_requests = UserRequest.objects.all().order_by('-id')
+        context = {
+            'current_year': current_year,
+            'all_requests': all_requests,
+        }
+        return render(request, 'helpdesk/view_user_request.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 # Tickets
 @login_required(login_url='login')
 def create_ticket(request):
-    if request.method == 'POST':
-        form = TicketForm(request.POST)
-        if form.is_valid():
-            task = form.cleaned_data['task']
-            assigned_person = form.cleaned_data['assigned_person']
-            priority = form.cleaned_data['priority']
-            allocated_date = form.cleaned_data['allocated_date']
-            deadline = form.cleaned_data['deadline']
-            name = Account.objects.get(email=assigned_person).first_name
-            mail_subject = 'You have a new ticket assigned'
-            message = render_to_string('helpdesk/ticket_email.html', {
-                'task': task,
-                'priority': priority,
-                'allocated_date': allocated_date,
-                'deadline': deadline,
-                'name': name
-            })
-            to_email = assigned_person
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
-            send_email.send()
-            form.save()
-            messages.success(request, 'You have successfully created a ticket.')
-            return redirect('create_ticket')
+    if request.user.is_helpdesk_superadmin:
+        if request.method == 'POST':
+            form = TicketForm(request.POST)
+            if form.is_valid():
+                task = form.cleaned_data['task']
+                assigned_person = form.cleaned_data['assigned_person']
+                priority = form.cleaned_data['priority']
+                allocated_date = form.cleaned_data['allocated_date']
+                deadline = form.cleaned_data['deadline']
+                name = Account.objects.get(email=assigned_person).first_name
+                mail_subject = 'You have a new ticket assigned'
+                message = render_to_string('helpdesk/ticket_email.html', {
+                    'task': task,
+                    'priority': priority,
+                    'allocated_date': allocated_date,
+                    'deadline': deadline,
+                    'name': name
+                })
+                to_email = assigned_person
+                send_email = EmailMessage(mail_subject, message, to=[to_email])
+                send_email.send()
+                form.save()
+                messages.success(request, 'You have successfully created a ticket.')
+                return redirect('create_ticket')
+            else:
+                messages.error(request, 'Something went wrong!')
         else:
-            messages.error(request, 'Something went wrong!')
-    else:
-        form = TicketForm
+            form = TicketForm
 
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/create_ticket.html', context)
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/create_ticket.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def view_ticket(request):
-    tickets = Ticket.objects.all().order_by('-id')
-    priorities = Priority.objects.all()
-    context = {
-        'current_year': current_year,
-        'tickets': tickets,
-        'priorities': priorities
-    }
-    return render(request, 'helpdesk/view_ticket.html', context)
+    if request.user.is_helpdesk_admin:
+        tickets = Ticket.objects.all().order_by('-id')
+        priorities = Priority.objects.all()
+        context = {
+            'current_year': current_year,
+            'tickets': tickets,
+            'priorities': priorities
+        }
+        return render(request, 'helpdesk/view_ticket.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def edit_ticket(request, ticket_id):
-    ticket = Ticket.objects.get(id=ticket_id)
-    if request.method == 'POST':
-        form = TicketForm(request.POST, instance=ticket)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You have successfully edited the ticket')
-            return redirect('view_ticket')
+    if request.user.is_helpdesk_superadmin:
+        ticket = Ticket.objects.get(id=ticket_id)
+        if request.method == 'POST':
+            form = TicketForm(request.POST, instance=ticket)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have successfully edited the ticket')
+                return redirect('view_ticket')
+            else:
+                messages.error(request, 'Something went wrong!')
         else:
-            messages.error(request, 'Something went wrong!')
+            form = TicketForm(instance=ticket)
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/edit_ticket.html', context)
     else:
-        form = TicketForm(instance=ticket)
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/edit_ticket.html', context)
+        return render('helpdesk_home')
 
 @login_required(login_url='login')
 def delete_ticket(request, ticket_id):
-    if request.user.is_superadmin:
+    if request.user.is_helpdesk_superadmin:
         ticket = Ticket.objects.get(id=ticket_id)
         ticket.delete()
         messages.success(request, 'You have successfully deleted the ticket')
@@ -294,10 +330,13 @@ def delete_ticket(request, ticket_id):
 # Manage
 @login_required(login_url='login')
 def manage_helpdesk(request):
-    context = {
-        'current_year': current_year,
-    }
-    return render(request, 'helpdesk/manage_helpdesk.html', context)
+    if request.user.is_helpdesk_superadmin:
+        context = {
+            'current_year': current_year,
+        }
+        return render(request, 'helpdesk/manage_helpdesk.html', context)
+    else:
+        return redirect('helpdesk_home')
 
 # FAQ
 @login_required(login_url='login')
@@ -310,24 +349,27 @@ def view_faq(request):
 # Knowledge Base
 @login_required(login_url='login')
 def create_kb(request):
-    if request.method == 'POST':
-        form = KnowledgeBaseForm(request.POST, request.FILES)
-        if form.is_valid():
-            category = KnowledgeCategory.objects.get(id=request.POST['category'])
-            newdoc = form.save(commit=False)
-            newdoc.docfile = request.FILES['docfile']
-            newdoc.category = category
-            newdoc.save()
-            messages.success(request, 'You have successfully added a new document.')
+    if request.user.is_helpdesk_admin:
+        if request.method == 'POST':
+            form = KnowledgeBaseForm(request.POST, request.FILES)
+            if form.is_valid():
+                category = KnowledgeCategory.objects.get(id=request.POST['category'])
+                newdoc = form.save(commit=False)
+                newdoc.docfile = request.FILES['docfile']
+                newdoc.category = category
+                newdoc.save()
+                messages.success(request, 'You have successfully added a new document.')
+            else:
+                messages.error(request, 'This file already exists.')
         else:
-            messages.error(request, 'This file already exists.')
+            form = KnowledgeBaseForm
+        context = {
+            'current_year': current_year,
+            'form': form
+        }
+        return render(request, 'helpdesk/create_kb.html', context)
     else:
-        form = KnowledgeBaseForm
-    context = {
-        'current_year': current_year,
-        'form': form
-    }
-    return render(request, 'helpdesk/create_kb.html', context)
+        return redirect('helpdesk_home')
 
 @login_required(login_url='login')
 def view_kb(request):
@@ -342,7 +384,7 @@ def view_kb(request):
 
 @login_required(login_url='login')
 def delete_kb(request, doc_docfile_id):
-    if request.user.is_superadmin:
+    if request.user.is_helpdesk_admin:
         kb = KnowledgeBase.objects.get(id=doc_docfile_id)
         kb.delete()
         messages.success(request, 'You have successfully deleted the document!')
@@ -350,22 +392,24 @@ def delete_kb(request, doc_docfile_id):
     else:
         return redirect('helpdesk_home')
 
+# Search Functionalities
 @login_required(login_url='login')
 def search_kb(request):
     knowledge_categories = KnowledgeCategory.objects.all().order_by('-id')
+    documents = KnowledgeBase.objects.all()
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
             documents = KnowledgeBase.objects.filter(docfile__contains=keyword).order_by('-id')
-        context = {
-            'current_year': current_year,
-            'documents': documents,
-            'knowledge_categories': knowledge_categories,
-        }
+    context = {
+        'current_year': current_year,
+        'documents': documents,
+        'knowledge_categories': knowledge_categories,
+    }
     return render(request, 'helpdesk/view_kb.html', context)
 
 @login_required(login_url='login')
-def search_by_cat(request, cat_name):
+def search_kb_by_cat(request, cat_name):
     knowledge_categories = KnowledgeCategory.objects.all().order_by('-id')
     documents = KnowledgeBase.objects.filter(category__name=cat_name)
     context = {
@@ -374,4 +418,56 @@ def search_by_cat(request, cat_name):
         'documents': documents,
     }
     return render(request, 'helpdesk/view_kb.html', context)
+
+@login_required(login_url='login')
+def search_role(request):
+    roles = Role.objects.all()
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            roles = Role.objects.filter(name__contains=keyword).order_by('-id')
+    context = {
+        'current_year': current_year,
+        'roles': roles
+    }
+    return render(request, 'helpdesk/view_role.html', context)
+
+@login_required(login_url='login')
+def search_priority(request):
+    priorities = Priority.objects.all()
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            priorities = Priority.objects.filter(name__contains=keyword).order_by('-id')
+    context = {
+        'current_year': current_year,
+        'priorities': priorities
+    }
+    return render(request, 'helpdesk/view_priority.html', context)
+
+@login_required(login_url='login')
+def search_staff(request):
+    staff_list = Staff.objects.all()
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            staff_list = Staff.objects.filter(member__email__contains=keyword).order_by('-id')
+    context = {
+        'current_year': current_year,
+        'staff_list': staff_list
+    }
+    return render(request, 'helpdesk/view_staff.html', context)
+
+@login_required(login_url='login')
+def search_issue(request):
+    issues = Issue.objects.all()
+    if 'keyword' in request.GET:
+        keyword = request.GET['keyword']
+        if keyword:
+            issues = Issue.objects.filter(name__contains=keyword).order_by('-id')
+    context = {
+        'current_year': current_year,
+        'issues': issues
+    }
+    return render(request, 'helpdesk/view_issue.html', context)
     

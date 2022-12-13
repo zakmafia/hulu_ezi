@@ -2,36 +2,119 @@
 {% load static %}
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Leave Request Page</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
     <div class="text-center">
         <h3>Welcome To Leave Request System</h3>
-      </div>
+    </div>
     <div class="row">
         <div class="col-lg-3 col-sm-6 mx-auto">
             <div class="card-box bg-blue">
                 <div class="inner">
-                    <h4>Create Leave Request</h4>
+                    <h4>Create your Leave Request</h4>
                     <p>Create your leave request</p>
                 </div>
                 <div class="icon">
-                    <i class="fab fa-meetup" aria-hidden="true"></i>
+                    <i class="fas fa-location-arrow" aria-hidden="true"></i>
                 </div>
-                <a href="{% url 'create_leave_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{% url 'create_leave_request' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-
         <div class="col-lg-3 col-sm-6 mx-auto">
             <div class="card-box bg-green">
                 <div class="inner">
-                    <h4>View your leave request</h4>
+                    <h4>View your Leave request</h4>
                     <p> View your leave request</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-marker" aria-hidden="true"></i>
+                    <i class="fas fa-reply" aria-hidden="true"></i>
                 </div>
-                <a href="{% url 'view_your_leave_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{% url 'view_your_leave_request' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-       
+        {% if user.is_leaverequest_admin %}
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-green">
+                <div class="inner">
+                    <h4>Manager Approval</h4>
+                    <p>View users leave request to approve or decline their request</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'users_leave_request' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% endif %}
+        {% if user.is_leaverequest_superadmin %}
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-orange">
+                <div class="inner">
+                    <h4>HR Approval</h4>
+                    <p>View users leave request to approve or decline their request</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-tasks" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'hr_users_leave_request' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h4>View all leave requests (Approved)</h4>
+                    <p>View all approved leave requests</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'all_users_request' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-light_blue">
+                <div class="inner">
+                    <h4>Manage Leave Request</h4>
+                    <p>Manage leave request types</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-pen" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'view_leave_type' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-light_red">
+                <div class="inner">
+                    <h4>Manage User</h4>
+                    <p>Assign and edit Manager and HR to users</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-cog" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'view_leave_type' %}" class="card-box-footer">Explore <i
+                        class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% endif %}
+
     </div>
 </div> <!-- container //  -->
 {% endblock %}

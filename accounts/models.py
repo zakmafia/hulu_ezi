@@ -32,6 +32,12 @@ class MyAccountManager(BaseUserManager):
         user.is_active = True
         user.is_staff = True
         user.is_superadmin = True
+        user.is_booking_admin = True
+        user.is_booking_superadmin = True
+        user.is_leaverequest_admin = True
+        user.is_leaverequest_superadmin = True
+        user.is_helpdesk_admin = True
+        user.is_helpdesk_superadmin = True
         user.save(using=self._db)
         return user
 
@@ -50,6 +56,12 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_superadmin = models.BooleanField(default=False)
+    is_booking_admin = models.BooleanField(default=False)
+    is_booking_superadmin = models.BooleanField(default=False)
+    is_leaverequest_admin = models.BooleanField(default=False)
+    is_leaverequest_superadmin = models.BooleanField(default=False)
+    is_helpdesk_admin = models.BooleanField(default=False)
+    is_helpdesk_superadmin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']

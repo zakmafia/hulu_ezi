@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'leave_request_page' %}">Leave Request Page</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'hr_users_leave_request' %}">HR Approval</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">View Detail</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<br>
 <div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
     <article class="card-body">
-          <div class="card" style="max-height:450px;">
+        <div class="card" style="max-height:450px;">
             <div class="card-body">
                 <form action="#" method="POST">
                     {% csrf_token %}
                     <p class="card-text">Requester Name: <b>{{ leave_request.requester_name.first_name }} {{ leave_request.requester_name.last_name }}</b> ({{ leave_request.requester_name.email }})</p>
                     <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
-                    <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date }}</b></p>
+                    <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date
+                            }}</b></p>
                     <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
                     <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
                     <div class="form-group">
@@ -26,7 +41,7 @@
                     </div>
                 </form>
             </div>
-          </div>
-      </article><!-- card-body.// -->
-  </div> <!-- card .// -->
+        </div>
+    </article><!-- card-body.// -->
+</div> <!-- card .// -->
 {% endblock %}

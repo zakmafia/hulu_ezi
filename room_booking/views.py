@@ -4,10 +4,10 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.utils.text import slugify
 from datetime import datetime
-import time
 from .models import Booking, AvailableTime, Room
 from accounts.models import Account
 from .forms import RoomForm, AvailableTimeForm
+from .utility import booking_time_am_pm_converter
 # For booking message
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -17,25 +17,6 @@ from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 # Create your views here.
 current_year = datetime.now().year
-
-
-# Utility function (time_converter)
-def booking_time_am_pm_converter(booking_time):
-    splited = None
-    booking_time_am_pm = None
-    if len(booking_time) == 6:
-        splited = booking_time.split(' ')
-        booking_time = splited[0] + ':00 ' + splited[1]
-    elif len(booking_time) == 7:
-                splited = booking_time.split(' ')
-                booking_time = splited[0] + ':00 ' + splited[1]
-    splited_time = booking_time.split(" ")
-    if splited_time[1].startswith("a"):
-        booking_time_am_pm = splited_time[0] + " AM"
-    else:
-        booking_time_am_pm = splited_time[0] + " PM"
-
-    return booking_time_am_pm
 
 def booking(request):
     rooms = Room.objects.all()
@@ -49,59 +30,71 @@ def booking(request):
 
 @login_required(login_url='login')
 def add_rooms(request):
-    if request.method == 'POST':
-        form = RoomForm(request.POST, request.FILES)
-        if form.is_valid():
-            room = form.save(commit=False)
-            room.slug = slugify(room.name)
-            form.save()
-            messages.success(request, 'You have successfully added a room!')
-            return redirect('add_rooms')
+    if request.user.is_booking_superadmin:
+        if request.method == 'POST':
+            form = RoomForm(request.POST, request.FILES)
+            if form.is_valid():
+                room = form.save(commit=False)
+                room.slug = slugify(room.name)
+                form.save()
+                messages.success(request, 'You have successfully added a room!')
+                return redirect('add_rooms')
+            else:
+                messages.error(request, 'Room with this name already exists!')
         else:
-            messages.error(request, 'Room with this name already exists!')
+            form = RoomForm
+        context = {
+            'form': form,
+            'current_year': current_year,
+        }
+        return render(request, 'bookings/add_rooms.html', context)
     else:
-        form = RoomForm
-    context = {
-        'form': form,
-        'current_year': current_year,
-    }
-    return render(request, 'bookings/add_rooms.html', context)
+        return redirect('bookings')
 
 @login_required(login_url='login')
 def add_available_time(request):
-    if request.method == 'POST':
-        form = AvailableTimeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'You have successfully added an available time!')
-            return redirect('add_available_time')
-        else:
-            messages.error(request, 'This time is already filled!')
-    context = {
-        'current_year': current_year
-    }
-    return render(request, 'bookings/add_available_time.html', context)
+    if request.user.is_booking_superadmin:
+        if request.method == 'POST':
+            form = AvailableTimeForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have successfully added an available time!')
+                return redirect('add_available_time')
+            else:
+                messages.error(request, 'This time is already filled!')
+        context = {
+            'current_year': current_year
+        }
+        return render(request, 'bookings/add_available_time.html', context)
+    else:
+        return redirect('bookings')
 
 @login_required(login_url='login')
 def view_rooms(request):
-    rooms = Room.objects.all()
-    rooms_count = rooms.count()
-    context = {
-        'rooms': rooms,
-        'current_year': current_year,  
-        'rooms_count': rooms_count,  
-    }
-    return render(request, 'bookings/view_rooms.html', context)
+    if request.user.is_booking_superadmin:
+        rooms = Room.objects.all()
+        rooms_count = rooms.count()
+        context = {
+            'rooms': rooms,
+            'current_year': current_year,  
+            'rooms_count': rooms_count,  
+        }
+        return render(request, 'bookings/view_rooms.html', context)
+    else:
+        return redirect('bookings')
 
 @login_required(login_url='login')
 def delete_room(request, room_id):
-    try:
-        room = Room.objects.get(id=room_id)
-        room.delete()
-        return redirect('view_rooms')
-    except(TypeError, ValueError, OverflowError, Room.DoesNotExist):
-        messages.error(request, 'There is an error! Try again!')
-        return redirect('view_rooms')
+    if request.user.is_booking_superadmin:
+        try:
+            room = Room.objects.get(id=room_id)
+            room.delete()
+            return redirect('view_rooms')
+        except(TypeError, ValueError, OverflowError, Room.DoesNotExist):
+            messages.error(request, 'There is an error! Try again!')
+            return redirect('view_rooms')
+    else:
+        return redirect('bookings')
 
 def view_room_information(request, room_id):
     room = Room.objects.get(id=room_id)
@@ -115,25 +108,30 @@ def view_room_information(request, room_id):
   
 @login_required(login_url='login')
 def view_available_times(request):
-    available_times = AvailableTime.objects.all()
-    available_times_count = available_times.count()
-    context = {
-        'available_times': available_times,
-        'available_times_count': available_times_count,
-        'current_year': current_year
-    }
-    return render(request, 'bookings/view_available_times.html', context)
+    if request.user.is_booking_superadmin:
+        available_times = AvailableTime.objects.all()
+        available_times_count = available_times.count()
+        context = {
+            'available_times': available_times,
+            'available_times_count': available_times_count,
+            'current_year': current_year
+        }
+        return render(request, 'bookings/view_available_times.html', context)
+    else:
+        return redirect('bookings')
 
 @login_required(login_url='login')
 def delete_time(request, time_id):
-    try:
-        available_time = AvailableTime.objects.get(id=time_id)
-        available_time.delete()
-        return redirect('view_available_times')
-    except(TypeError, ValueError, OverflowError, Booking.DoesNotExist):
-        messages.error(request, 'There is an error! Try again!')
-        return redirect('view_available_times')
-
+    if request.user.is_booking_superadmin:
+        try:
+            available_time = AvailableTime.objects.get(id=time_id)
+            available_time.delete()
+            return redirect('view_available_times')
+        except(TypeError, ValueError, OverflowError, Booking.DoesNotExist):
+            messages.error(request, 'There is an error! Try again!')
+            return redirect('view_available_times')
+    else:
+        return redirect('bookings')
 
 def create_booking(request):
 
@@ -495,29 +493,29 @@ def cancel_booking(request, booking_id):
 
 @login_required(login_url='login')
 def cancel_booking_admin(request, info_id, room_id):
-    booking_info = Booking.objects.get(id=info_id, room=room_id)
-    if request.method == 'POST':
-        reason = request.POST['reason']
-        current_site = get_current_site(request)
-        mail_subject = 'Meeting Room Booking Cancellation'
-        message = render_to_string('bookings/admin_cancellation_booking.html',{
-            'booking_person_name': booking_info.booking_person.first_name,
-            'name': booking_info.name,
-            'booking_date_from': booking_info.booking_date_from,
-            'booking_date_to': booking_info.booking_date_to,
-            'booking_time_from': booking_info.booking_time_from,
-            'booking_time_to': booking_info.booking_time_to,
-            'admin_name': request.user.first_name,
-            'reason': reason
-        })
-        to_email = booking_info.booking_person.email
-        send_email = EmailMessage(mail_subject, message, to=[to_email])
-        if send_email.send():
-            booking_info.delete()
-            return HttpResponseRedirect('/bookings/view_room_information/' + room_id)
-    context = {
-        'booking_info': booking_info,
-    }
-    return render(request, 'bookings/cancel_booking_admin_view.html', context)
-
-    
+    if request.user.is_booking_admin:
+        booking_info = Booking.objects.get(id=info_id, room=room_id)
+        if request.method == 'POST':
+            reason = request.POST['reason']
+            mail_subject = 'Meeting Room Booking Cancellation'
+            message = render_to_string('bookings/admin_cancellation_booking.html',{
+                'booking_person_name': booking_info.booking_person.first_name,
+                'name': booking_info.name,
+                'booking_date_from': booking_info.booking_date_from,
+                'booking_date_to': booking_info.booking_date_to,
+                'booking_time_from': booking_info.booking_time_from,
+                'booking_time_to': booking_info.booking_time_to,
+                'admin_name': request.user.first_name,
+                'reason': reason
+            })
+            to_email = booking_info.booking_person.email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            if send_email.send():
+                booking_info.delete()
+                return HttpResponseRedirect('/bookings/view_room_information/' + room_id)
+        context = {
+            'booking_info': booking_info,
+        }
+        return render(request, 'bookings/cancel_booking_admin_view.html', context)
+    else:
+        return redirect('bookings')

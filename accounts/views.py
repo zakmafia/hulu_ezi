@@ -189,12 +189,13 @@ def edit_user(request, info_id):
 
 @login_required(login_url='login')
 def search_user(request):
+    users_info = Account.objects.all()
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
             users_info = Account.objects.filter(first_name__contains=keyword).order_by('-id')
-        context = {
-            'users_info': users_info,
-            'current_year': current_year,
-        }
+    context = {
+        'users_info': users_info,
+        'current_year': current_year,
+    }
     return render(request, 'accounts/manage_user.html', context)

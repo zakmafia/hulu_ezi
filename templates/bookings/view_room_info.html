@@ -2,6 +2,19 @@
 {% load static %}
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'bookings' %}">Booking Page</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ room.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
     <!-- ============================ COMPONENT 1 ================================= -->
         <div class="row">
             <aside class="col-md-6">
@@ -36,7 +49,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{ info.name }} by -</h5>
                           <p class="card-text"><b>{{ info.booking_person.first_name }} {{ info.booking_person.last_name }} </b> on <b>{{ info.booking_date_from }}</b> to <b>{{ info.booking_date_to }}</b> at <b>{{ info.booking_time_from }}</b> to <b>{{ info.booking_time_to }}</b></p>
-                          {% if user.is_superadmin %}
+                          {% if user.is_booking_admin %}
                           <a href="{% url 'cancel_booking_admin' info.id room.id %}">Cancel booking</a>
                           {% endif %}
                         </div>

@@ -2,6 +2,19 @@
 {% load static %}
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col mx-auto">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Help Desk Page</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
     <div class="text-center">
       <h3>Welcome To Help Desk</h3>
     </div>
@@ -30,7 +43,32 @@
                 <a href="{% url 'my_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        
+        {% if user.is_helpdesk_admin %}
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-light_blue">
+                <div class="inner">
+                  <h4>View User Requests</h4>
+                  <p>View all user requests and give feedback</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-location-arrow" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'view_user_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-light_green">
+                <div class="inner">
+                  <h4>View Tickets</h4>
+                  <p>View all the available tickets created</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-ticket-alt" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'view_ticket' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        {% endif %}
         <div class="col-lg-3 col-sm-6 mx-auto">
             <div class="card-box bg-orange">
                 <div class="inner">
@@ -43,7 +81,7 @@
                 <a href="{% url 'view_kb' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        {% if user.is_superadmin %}
+        {% if user.is_helpdesk_superadmin %}
         <div class="col-lg-3 col-sm-6 mx-auto">
             <div class="card-box bg-red">
                 <div class="inner">

@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+  <div class="row">
+      <div class="col">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'leave_request_page' %}">Leave Request Page</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'all_users_request' %}">All Leave Requests</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Approved User Detail</li>
+              </ol>
+          </nav>
+      </div>
+  </div>
+</div>
+<br>
 <div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
     <article class="card-body">
       <header class="mb-4"><h4 class="card-title">{{ first_name }} {{ last_name }}'s all Leave Request</h4><a href="{% url 'export_report_user' user_id %}" class="btn btn-light">Export User Report</a></header>

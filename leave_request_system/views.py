@@ -351,12 +351,13 @@ def export_report_user(request, user_id):
 
 @login_required(login_url='login')
 def search(request):
+    leave_requests = LeaveRequest.objects.filter(manager_approved=True, hr_approved=True).order_by('-id')
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
             leave_requests = LeaveRequest.objects.filter(manager_approved=True, hr_approved=True, requester_name__first_name__contains=keyword).order_by('-id')
-        context = {
-            'leave_requests': leave_requests,
-            'current_year': current_year,
-        }
+    context = {
+        'leave_requests': leave_requests,
+        'current_year': current_year,
+    }
     return render(request, 'leave_request_system/all_users_request.html', context)

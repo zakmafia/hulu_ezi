@@ -1,14 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<section class="section">
-    <div class="container">
-        <h2 class="title-page text-center">Your Bookings</h2>
+<div class="container">
+  <div class="row">
+    <div class="col mx-auto">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'bookings' %}">Bookings Page</a></li>
+          <li class="breadcrumb-item active" aria-current="page">My Bookings</li>
+        </ol>
+      </nav>
     </div>
-</section>
+  </div>
+</div>
+<br>
+<div class="container">
+    <h2 class="title-page text-center">Your Bookings</h2>
+</div>
 <div class="card mx-auto" style="max-width:720px; margin-bottom:10px;">
     <article class="card-body">
-      <header class="mb-4 text-center"><a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking</a></header>
+      <header class="mb-4 text-center"><a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking +</a></header>
       {% include 'includes/alerts.html' %}
       {% if not meeting_room_booking_info %}
         Currently you have no bookings! Create a booking😊

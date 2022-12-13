@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'leave_request_page' %}">Leave Request Page</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'manage_user' %}">Manage User</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit User</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<br>
 <div class="card mx-auto" style="max-width:600px; margin-bottom:20px;">
     <article class="card-body">
-      <header class="mb-4"><h4 class="card-title">Manage User</h4></header>
+      <header class="mb-4"><h4 class="card-title">Edit User</h4></header>
       {% include 'includes/alerts.html' %}
         <form action="#" method="POST" enctype="multipart/form-data">
             {% csrf_token %}

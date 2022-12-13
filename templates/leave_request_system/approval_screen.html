@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'leave_request_page' %}">Leave Request Page</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'users_leave_request' %}">Manager Approval</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">View Detail</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<br>
 <div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
     <article class="card-body">
           <div class="card" style="max-height:450px;">

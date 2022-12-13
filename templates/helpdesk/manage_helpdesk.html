@@ -21,30 +21,6 @@
 <div class="container" style="margin-top: 2rem; margin-bottom: 7rem;">
   <div class="row">
     <div class="col-lg-3 col-sm-6 mx-auto">
-      <div class="card-box bg-blue">
-          <div class="inner">
-            <h4>View User Requests</h4>
-            <p>View all user requests and give feedback</p>
-          </div>
-          <div class="icon">
-              <i class="fas fa-location-arrow" aria-hidden="true"></i>
-          </div>
-          <a href="{% url 'view_user_request' %}" class="card-box-footer">View User Requests</a>
-      </div>
-    </div>
-    <div class="col-lg-3 col-sm-6 mx-auto">
-      <div class="card-box bg-light_green">
-          <div class="inner">
-            <h4>View Tickets</h4>
-            <p>View all the available tickets created</p>
-          </div>
-          <div class="icon">
-              <i class="fas fa-ticket-alt" aria-hidden="true"></i>
-          </div>
-          <a href="{% url 'view_ticket' %}" class="card-box-footer">View Tickets</a>
-      </div>
-    </div>
-    <div class="col-lg-3 col-sm-6 mx-auto">
       <div class="card-box bg-green">
         <div class="inner">
           <h4>Manage Staff</h4>
@@ -53,7 +29,8 @@
         <div class="icon">
             <i class="fas fa-user-cog" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_staff' %}" class="card-box-footer">Manage Staff</a>
+        <a href="{% url 'view_staff' %}" class="card-box-footer">Explore <i
+          class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <div class="col-lg-3 col-sm-6 mx-auto">
@@ -65,7 +42,8 @@
         <div class="icon">
             <i class="fa fa-tasks" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_role' %}" class="card-box-footer">Manage Role</a>
+        <a href="{% url 'view_role' %}" class="card-box-footer">Explore <i
+          class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <div class="col-lg-3 col-sm-6 mx-auto">
@@ -77,7 +55,8 @@
         <div class="icon">
             <i class="fas fa-sync-alt" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_priority' %}" class="card-box-footer">Manage Priority</a>
+        <a href="{% url 'view_priority' %}" class="card-box-footer">Explore <i
+          class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <div class="col-lg-3 col-sm-6 mx-auto">
@@ -89,7 +68,8 @@
         <div class="icon">
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_issue' %}" class="card-box-footer">Manage Issue</a>
+        <a href="{% url 'view_issue' %}" class="card-box-footer">Explore <i
+          class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
   </div>

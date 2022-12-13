@@ -1,28 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-        <div class="card mx-auto" style="max-width:600px; margin-bottom:20px;">
-          <article class="card-body">
-            <header class="mb-4"><h4 class="card-title">Manage User</h4>
-              <form class="form-inline my-2 my-lg-0" action="{% url 'search_user' %}" method="GET">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search User" name="keyword">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-              </form>
-            </header>
-            <div class="scrollable">
-                {% for info in users_info %}
-                      <div class="card">
-                        <div class="card-body">
-                            <p class="card-text">{{ info.first_name }} {{ info.last_name }} {% if info.is_superadmin %} (Super Adminstrator) {% endif %}</p>
-                            <p class="card-text">{{ info.email }}</p>
-                            {% if user.is_superadmin %}
-                            <a href="{% url 'edit_user' info.id %}">Edit User</a>
-                            {% endif %}
-                        </div>
-                      </div>
-                {% endfor %}
-            </div>
-            </article><!-- card-body.// -->
-        </div> <!-- card .// -->
+<div class="container">
+  <div class="row">
+      <div class="col">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'leave_request_page' %}">Leave Request Page</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Manage User</li>
+              </ol>
+          </nav>
+      </div>
+  </div>
+</div>
+<br>
+<div class="card mx-auto" style="max-width:600px; margin-bottom:20px;">
+  <article class="card-body">
+    <header class="mb-4">
+      <h4 class="card-title">Manage User</h4>
+      <form class="form-inline my-2 my-lg-0" action="{% url 'search_user' %}" method="GET">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search User" name="keyword">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </header>
+    <div class="scrollable">
+      {% for info in users_info %}
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">{{ info.first_name }} {{ info.last_name }} {% if info.is_superadmin %} (Super
+            Adminstrator) {% endif %}</p>
+          <p class="card-text">{{ info.email }}</p>
+          {% if user.is_superadmin %}
+          <a href="{% url 'edit_user' info.id %}">Edit User</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </article><!-- card-body.// -->
+</div> <!-- card .// -->
 
 {% endblock %}

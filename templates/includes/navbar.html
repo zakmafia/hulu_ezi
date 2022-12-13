@@ -26,7 +26,7 @@
                         <li>
                             <a class="color_a" href="{% url 'create_booking' %}">Quick Booking</a>
                         </li>
-                        {% if user.is_authenticated and user.is_superadmin %}
+                        {% if user.is_authenticated and user.is_booking_superadmin %}
                         <li>
                             <a class="color_a" href="{% url 'view_rooms' %}">Manage Room</a>
                         </li>
@@ -47,9 +47,9 @@
                           <a class="color_a" href="{% url 'create_user_request' %}">Create a request</a>
                       </li>
                       <li>
-                          <a class="color_a" href="#">View your request</a>
+                          <a class="color_a" href="{% url 'my_request' %}">View your request</a>
                       </li>
-                      {% if user.is_superadmin %}
+                      {% if user.is_helpdesk_superadmin %}
                       <li>
                           <a class="color_a" href="{% url 'manage_helpdesk' %}">Manage Help Desk</a>
                       </li>
@@ -68,12 +68,12 @@
                     <li>
                         <a class="color_a" href="{% url 'view_your_leave_request' %}">View your Leave Request</a>
                     </li>
-                    {% if user.is_admin %}
+                    {% if user.is_leaverequest_admin %}
                     <li>
                       <a class="color_a" href="{% url 'users_leave_request' %}">Manager Approval</a>
                     </li>
                     {% endif %}
-                    {% if user.is_superadmin %}
+                    {% if user.is_leaverequest_superadmin %}
                     <li>
                       <a class="color_a" href="{% url 'all_users_request' %}">View all leave request (Approved)</a>
                     </li>

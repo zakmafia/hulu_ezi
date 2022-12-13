@@ -36,7 +36,11 @@ urlpatterns = [
     path('view_kb/', views.view_kb, name='view_kb'),
     path('delete_kb/<doc_docfile_id>/', views.delete_kb, name='delete_kb'),
     path('search_kb/', views.search_kb, name='search_kb'),
-    path('search_by_cat/<cat_name>/', views.search_by_cat, name='search_by_cat')
+    path('search_kb_by_cat/<cat_name>/', views.search_kb_by_cat, name='search_kb_by_cat'),
+    path('search_role/', views.search_role, name='search_role'),
+    path('search_priority/', views.search_priority, name='search_priority'),
+    path('search_staff/', views.search_staff, name='search_staff'),
+    path('search_issue/', views.search_issue, name='search_issue'),
 
     
 ]
