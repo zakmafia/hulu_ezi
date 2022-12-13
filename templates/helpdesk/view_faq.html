@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'view_kb' %}">Knowledge Base</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+                </ol>
+              </nav>              
+        </div>
+    </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h3> FAQ </h3>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container" style="margin-bottom: 2em;">
+  <div class="list-group w-100">
+    <a href="#shortExampleAnswer1collapse" data-toggle="collapse" aria-expanded="false"
+      aria-controls="shortExampleAnswer1collapse" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Q: What are the requirements for a strong password?</h5>
+      </div>
+      <small><u>Learn more</u></small>
+      <!-- Collapsed content -->
+      <div class="collapse mt-3" id="shortExampleAnswer1collapse">
+        A: Passwords must be at least eight characters long. Aim for even more strength with fifteen characters or longer. Passwords must include at least 3 of the following: uppercase, lowercase, numbers, special characters, or certain Unicode characters.
+      </div>
+    </a>
+    <a href="#shortExampleAnswer2collapse" data-toggle="collapse" aria-expanded="false"
+      aria-controls="shortExampleAnswer1collapse" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Q: How do I reset my password?</h5>
+      </div>
+      <small class="text-muted"><u>Learn more</u></small>
+      <!-- Collapsed content -->
+      <div class="collapse mt-3" id="shortExampleAnswer2collapse">
+        A: Go to the password reset page and answer a few security questions. Then, you'll be able to create a new password. As a security precaution, you'll be prompted to create a new password every 6 months.
+      </div>
+    </a>
+    <a href="#shortExampleAnswer3collapse" data-toggle="collapse" aria-expanded="false"
+      aria-controls="shortExampleAnswer1collapse" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Q: I'm unable to sign in. Where do I get help?</h5>
+      </div>
+      <small class="text-muted"><u>Learn more</u></small>
+      <!-- Collapsed content -->
+      <div class="collapse mt-3" id="shortExampleAnswer3collapse">
+        A: Get help with basic tasks like signing in by calling or texting the IT desk from your registered mobile device at any time. If you need help but can't use a registered mobile device, we will ask security questions until we can confirm your identity.
+      </div>
+    </a>
+    <a href="#shortExampleAnswer4collapse" data-toggle="collapse" aria-expanded="false"
+      aria-controls="shortExampleAnswer1collapse" class="list-group-item list-group-item-action">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Q: My account was accessed without my knowledge. What do I do?</h5>
+      </div>
+      <small class="text-muted"><u>Learn more</u></small>
+      <!-- Collapsed content -->
+      <div class="collapse mt-3" id="shortExampleAnswer4collapse">
+        A: Immediately report any suspicious or fraudulent activity with your work accounts or devices by logging an incident or emailing the IT desk. When in doubt, it's best to create an alert than to be impacted by a disruptive security issue. Learn more about data privacy and security practices in the workplace.
+      </div>
+    </a>
+  </div>
+</div>
+{% endblock %}

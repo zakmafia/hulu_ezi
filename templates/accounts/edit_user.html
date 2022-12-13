@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:600px; margin-bottom:20px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">Manage User</h4></header>
+      {% include 'includes/alerts.html' %}
+        <form action="#" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" name="first_name" value="{{ first_name }}">
+            </div> <!-- form-group end.// -->
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{ last_name }}">
+            </div> <!-- form-group end.// -->
+            <div class="form-group">
+                <label>Manager</label>
+                <input type="text" id="manager_id" class="form-control" placeholder="Manager Email" name="manager_email" value="{{ user_manager }}" readonly>
+                <a href=# onclick="hide_and_display_change_manager();">change manager</a>
+            </div> <!-- form-group end.// -->
+            <div id="change_manager" class="form-group">
+                <label>Select Users:</label>
+                {% if all_users %}
+                <select id="inputState" class="form-control" name="manager">
+                    {% for user_object in all_users %}
+                    <option>{{ user_object.email }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </div> <!-- form-group end.// --> 
+            <div class="form-group">
+                <label>HR</label>
+                <input type="text" id="hr_id" class="form-control" placeholder="HR Email" name="hr_email" value="{{ user_hr }}" readonly>
+                <a href=# onclick="hide_and_display_change_hr();">change hr</a>
+            </div> <!-- form-group end.// -->
+            <div id="change_hr" class="form-group">
+                <label>Search for Users:</label>
+                {% if all_users %}
+                <select id="inputState" class="form-control" name="hr">
+                    {% for user_object in all_users %}
+                    <option>{{ user_object.email }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </div> <!-- form-group end.// --> 
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block"> Edit User  </button>
+            </div> <!-- form-group// -->           
+        </form>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+  <script>
+    var change_manager = document.getElementById('change_manager');
+    var change_hr = document.getElementById('change_hr');
+    change_manager.style.display = "none";
+    change_hr.style.display = "none";
+
+    function hide_and_display_change_manager(){
+        if (change_manager.style.display === "none"){
+            change_manager.style.display = "block";
+        } else {
+            change_manager.style.display = "none";
+        }
+    }
+    function hide_and_display_change_hr(){
+        if (change_hr.style.display === "none"){
+            change_hr.style.display = "block";
+        } else {
+            change_hr.style.display = "none";
+        }
+    }
+  </script>
+{% endblock %}

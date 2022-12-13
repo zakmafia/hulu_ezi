@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="text-center">
+      <h3>Welcome To Help Desk</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h4>Create Requests</h4>
+                    <p>Create requests to communicate with the Tech-support Team</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-location-arrow" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'create_user_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-light_red">
+                <div class="inner">
+                    <h4>My Requests</h4>
+                    <p>View requests from the Tech-support Team</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-reply" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'my_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-orange">
+                <div class="inner">
+                    <h4>Knowledge Base</h4>
+                    <p>Find can find resources that are useful for you</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-marker" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'view_kb' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% if user.is_superadmin %}
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-red">
+                <div class="inner">
+                    <h4>Manage Help Desk</h4>
+                    <p>Manage your Help Desk page (Administrator)</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-cog" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'manage_helpdesk' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+  </div>
+{% endblock %}

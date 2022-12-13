@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">View your leave requests</h4></header>
+      <div class="scrollable">
+          {% if not leave_requests %}
+          You don't have any leave request 😊
+          {% endif %}
+          {% for leave_request in leave_requests %}
+          <div class="card" style="max-height:400px;">
+            <div class="card-body">
+              <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
+              <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date }}</b></p>
+              <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
+              <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
+              {% if leave_request.pending_manager_approval and leave_request.hr_approved %}
+              <p class="text-warning">Pending Manager Approval</p>
+              {% endif %}
+              {% if leave_request.pending_hr_approval %}
+              <p class="text-warning">Pending HR Approval</p>
+              {% endif %}
+              {% if not leave_request.manager_approved and not leave_request.pending_manager_approval %}
+              <p class="text-danger">Manager Rejected your request!</p>
+              {% endif %}
+              {% if leave_request.manager_approved%}
+              <p class="text-success">Manager Accepted your request!</p>
+              {% endif %}
+              {% if not leave_request.hr_approved and not leave_request.pending_hr_approval %}
+              <p class="text-danger">HR Rejected your request!</p>
+              {% endif %}
+              {% if leave_request.hr_approved%}
+              <p class="text-success">HR Accepted your request!</p>
+              {% endif %}
+              <div id="comment_info">
+                {% if leave_request.manager_comment %}
+                <p class="card-text">Manager Comment: <b>{{ leave_request.manager_comment }}</b></p>
+                {% endif %}
+                {% if leave_request.hr_comment %}
+                <p class="card-text">HR Comment: <b>{{ leave_request.hr_comment }}</b></p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+  
+{% endblock %}

@@ -1,0 +1,8 @@
+{% autoescape off %}
+
+You have successfully booked a meeting room with the name of "{{ name }}" on {{ booking_date_from  }} to {{ booking_date_to }} at {{ booking_time_from }} to {{ booking_time_to }} with a description of "{{ description }}". 
+Click the link if you want to cancel your booking
+http://{{ domain }}{% url 'cancel_booking_validate' uidb64=uid token=token booking_id=booking_id %}
+If you think it's not you, Please ignore the email.
+
+{% endautoescape %}

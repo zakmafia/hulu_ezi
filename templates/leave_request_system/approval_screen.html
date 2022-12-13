@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
+    <article class="card-body">
+          <div class="card" style="max-height:450px;">
+            <div class="card-body">
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <p class="card-text">Requester Name: <b>{{ leave_request.requester_name.first_name }} {{ leave_request.requester_name.last_name }}</b> ({{ leave_request.requester_name.email }})</p>
+                    <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
+                    <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date }}</b></p>
+                    <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
+                    <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
+                    <div class="form-group">
+                        <label>Comment:</label>
+                        <textarea name="comment" class="form-control" placeholder="Enter comment here..."></textarea>
+                    </div> <!-- form-group end.// -->
+                    <div class="form-row">
+                        <div class="col-md-2 form-group">
+                            <button type="submit" class="btn btn-success" name="approve">Approve</button>
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <button type="submit" class="btn btn-danger" name="reject">Reject</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+{% endblock %}

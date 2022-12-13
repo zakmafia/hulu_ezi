@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <!-- ============================ COMPONENT 1 ================================= -->
+        <div class="row">
+            <aside class="col-md-6">
+                <article class="gallery-wrap"> 
+                    <div class="row" >
+                    <div class="col">
+                        <figure class="card">
+                            <div class="img-wrap"> 
+                                <img src="{{ room.images.url }}"/>
+                            </div> <!-- img-wrap.// -->
+                        </figure>
+                    </div> <!-- col.// -->
+                </div>
+                </article> <!-- gallery-wrap .end// -->
+            </aside>
+            <main class="col-md-6 border-left">
+                <div class="text-center" style="margin-top:10px;">
+                    <a href="{% url 'create_booking_from_room' room.id%}" class="btn brn-block btn-primary">Create a Booking +</a>
+                </div>
+                <div class="card mx-auto" style="max-width:520px; margin-top:10px;">
+                    <article class="card-body">
+                      <header class="mb-4 text-center"><h4 class="card-title">{{ room.name }}</h4></header>
+                      {% include 'includes/alerts.html' %}
+                      {% if not meeting_room_booking_info %}
+                        This room is currently not booked! Be the first😊
+                      {% endif %}
+                      </article>
+                </div>
+                <div class="scrollable">
+                {% for info in meeting_room_booking_info %}
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ info.name }} by -</h5>
+                          <p class="card-text"><b>{{ info.booking_person.first_name }} {{ info.booking_person.last_name }} </b> on <b>{{ info.booking_date_from }}</b> to <b>{{ info.booking_date_to }}</b> at <b>{{ info.booking_time_from }}</b> to <b>{{ info.booking_time_to }}</b></p>
+                          {% if user.is_superadmin %}
+                          <a href="{% url 'cancel_booking_admin' info.id room.id %}">Cancel booking</a>
+                          {% endif %}
+                        </div>
+                      </div>
+                {% endfor %}
+                </div>
+            </main>
+        </div>
+    <br>
+    </div>
+{% endblock %}

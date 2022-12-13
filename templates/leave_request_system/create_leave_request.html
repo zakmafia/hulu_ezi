@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:600px; margin-bottom:20px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">Create a leave request</h4></header>
+      {% include 'includes/alerts.html' %}
+      <form action="#" method="POST">
+          {% csrf_token %}
+             <div class="form-group">
+                  <label>Title:</label>
+                  <input type="text" class="form-control" placeholder="Title of the Leave Request" name="title"/>
+              </div> <!-- form-group end.// -->
+              <div class="form-group">
+                <label>Detail:</label>
+                <textarea name="detail" class="form-control" placeholder="Enter detail here..."></textarea>
+            </div> <!-- form-group end.// -->
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label>From:</label>
+                      <input class="form-control" id="from_date" name="from_date" placeholder="MM/DD/YYYY" type="text" />
+                  </div> <!-- form-group end.// --> 
+                  <div class="form-group col-md-6">
+                      <label>To: </label>
+                      <input class="form-control" id="to_date" name="to_date" placeholder="MM/DD/YYYY" type="text" />
+                  </div> <!-- form-group end.// -->
+              </div> 
+              <div class="form-group">
+                  <label>Leave Type:</label>
+                  {% if leave_types %}
+                  <select id="inputState" class="form-control" name="leave_type">
+                    {% for leave in leave_types %}
+                        <option>{{ leave.leave_type }}</option>
+                    {% endfor %}
+                    </select>
+                  {% endif %}
+              </div> <!-- form-group end.// -->
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block">Create a Leave Request</button>
+              </div> <!-- form-group// -->      
+          </form>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+  <script>
+	$(document).ready(function(){
+		var from_date_input=$('input[name="from_date"]'); //our date input has the name "from_date"
+		var to_date_input=$('input[name="to_date"]'); //our date input has the name "to_date"
+		var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+		from_date_input.datepicker({
+			format: 'yyyy-dd-mm',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+            startDate: new Date(),
+		})
+        to_date_input.datepicker({
+			format: 'yyyy-dd-mm',
+			container: container,
+			todayHighlight: true,
+			autoclose: true,
+            startDate: new Date(),
+		})
+
+	})
+</script>
+{% endblock %}

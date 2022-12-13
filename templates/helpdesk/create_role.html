@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'manage_helpdesk' %}">Manage Help Desk</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'view_role' %}">View Role</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Create Role</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col text-center mx-auto">
+            <h3>Create Role</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card mx-auto" style="max-width:520px; margin-bottom:7rem;">
+        <article class="card-body">
+            {% include 'includes/alerts.html' %}
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Name</label>
+                    {{ form.name }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Create Role </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+</div>
+{% endblock %}

@@ -1,0 +1,1 @@
+This system is designed to faciliate office work. You can book meeting rooms, create and view your leave request, and create and view tickets using the helpdesk feature.

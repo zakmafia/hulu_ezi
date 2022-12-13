@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="text-center">
+    <h3>Welcome To HST Simple ERP. Enjoy The Experience. 👍</h3>
+  </div>
+  <div class="row">
+      <div class="col-lg-3 col-sm-6 mx-auto">
+          <div class="card-box bg-blue">
+              <div class="inner">
+                  <h4>Room Booking</h4>
+                  <p>Manage your meeting room booking</p>
+              </div>
+              <div class="icon">
+                  <i class="fab fa-meetup" aria-hidden="true"></i>
+              </div>
+              <a href="{% url 'bookings' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+
+      <div class="col-lg-3 col-sm-6 mx-auto">
+          <div class="card-box bg-green">
+              <div class="inner">
+                  <h4>Help Desk</h4>
+                  <p>A place to find an Answer to your questions</p>
+              </div>
+              <div class="icon">
+                  <i class="fas fa-marker" aria-hidden="true"></i>
+              </div>
+              <a href="{% url 'helpdesk_home' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 mx-auto">
+          <div class="card-box bg-orange">
+              <div class="inner">
+                  <h4>Leave Request</h4>
+                  <p>Create and view your leave requests</p>
+              </div>
+              <div class="icon">
+                  <i class="fas fa-location-arrow" aria-hidden="true"></i>
+              </div>
+              <a href="{% url 'leave_request_page' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

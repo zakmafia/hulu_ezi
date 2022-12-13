@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="title-page text-center">Welcome to HST Meeting Room Booking System</h2>
+    </div>
+</section>
+    <div class="container">
+    <div class="row">
+        <main class="col-md-9">
+    
+    <header class="border-bottom mb-4 pb-3">
+            <div class="form-inline">
+                <span class="mr-md-auto"><b>{{ rooms_count }}</b> rooms found </span>
+            </div>
+    </header>
+    <div class="row">
+        {% for room in rooms %}
+        <div class="col-md-4">
+            <figure class="card card-product-grid">
+                <div class="img-wrap"> 
+                    <img src="{{ room.images.url }}">
+                </div> <!-- img-wrap.// -->
+                <figcaption class="info-wrap">
+                    <div class="fix-height">
+                        <a href="#" class="title">{{ room.name }}</a>
+                        <small>{{ room.address }}</small>
+                    </div>
+                    <a href="{% url 'view_room_information' room.id %}" class="btn btn-block btn-primary">See Room Information</a>
+                </figcaption>
+            </figure>
+        </div> <!-- col.// -->
+        {% endfor %}
+    </div> <!-- row end.// -->
+        </main> <!-- col.// -->
+    </div>
+    </div> <!-- container .//  -->
+{% endblock %}

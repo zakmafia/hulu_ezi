@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">View request</li>
+                </ol>
+              </nav>              
+        </div>
+    </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col text-center mx-auto">
+        <h3>View User Request</h3>
+    </div>
+  </div>
+</div>
+<div class="container" style="margin-top: 2rem; margin-bottom: 7rem;">
+  <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Issue</th>
+          <th scope="col">Other Issue</th>
+          <th scope="col">Issue Description</th>
+          <th scope="col">Assigned To</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for user_request in all_requests %}
+          <tr>
+              <td>{{ user_request.requester.email }}</td>
+              <td>{{ user_request.issue }}</td>
+              <td>{{ user_request.other_issue }}</td>
+              <td>{{ user_request.issue_description }}</td>
+              <td>{{ user_request.issue.assigned_to }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+</div>
+{% endblock %}

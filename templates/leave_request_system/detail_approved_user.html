@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">{{ first_name }} {{ last_name }}'s all Leave Request</h4><a href="{% url 'export_report_user' user_id %}" class="btn btn-light">Export User Report</a></header>
+      <div class="scrollable">
+          {% if not leave_requests %}
+          No leave requests😊
+          {% endif %}
+          {% for leave_request in leave_requests %}
+          <div class="card" style="max-height:350px;">
+            <div class="card-body">
+              <p class="card-text">Name: <b>{{ leave_request.requester_name.first_name }} {{ leave_request.requester_name.last_name }}</b> ({{ leave_request.requester_name.email }}) </p>
+              <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
+              <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date }}</b></p>
+              <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
+              <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
+              {% if leave_request.manager_approved%}
+              <p class="text-success">Manager Accepted your request!</p>
+              {% endif %}
+              {% if leave_request.hr_approved%}
+              <p class="text-success">HR Accepted your request!</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+{% endblock %}

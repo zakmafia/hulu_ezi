@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'bookings' %}">Booking Page</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">View Available Time</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col text-center mx-auto">
+            <h3>View Available Times</h3>
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col mx-auto">
+            <a href="{% url 'add_available_time' %}" class="btn btn-outline-primary">Add Available Time +</a>
+        </div>
+    </div>
+    <br>
+    <div class="row mx-auto">
+        <div class="col mx-auto">
+            <span class="mr-md-auto"><b>{{ available_times_count }}</b> available times </span> 
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% for time in available_times %}
+        <div class="col-md-3">
+            <figure class="card card-product-grid">
+                <figcaption class="info-wrap">
+                    <div class="fix-height">
+                        <a href="#" class="title">{{ time.available_time }}</a>
+                    </div>
+                    {% if user.is_superadmin %}
+                    <a href="{% url 'delete_time' time.id %}" class="btn btn-block btn-danger" onclick="return confirm('Are you sure you want to delete this time?')">Delete Time </a>
+                    {% endif %}
+                </figcaption>
+            </figure>
+        </div> <!-- col.// -->
+        {% endfor %}
+    </div>
+</div> <!-- container .//  -->
+    {% endblock %}

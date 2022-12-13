@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section">
+    <div class="container">
+        <h2 class="title-page text-center">Booked Meeting Room</h2>
+    </div> <!-- container //  -->
+    </section>
+    <div class="container">
+    <div class="row">
+        {% if booking_info %}
+        <div class="col-md-4 align-self-center">
+            <div class="card card-block">
+                <figure class="card card-product-grid">
+                    <div class="img-wrap"> 
+                        <img src="{{ booking_info.room.images.url }}">
+                    </div> <!-- img-wrap.// -->
+                    <figcaption class="info-wrap">
+                        <p>{{ booking_info.name }} by -</p>
+                        <p>{{ booking_info.booking_person.first_name }} {{ booking_info.booking_person.last_name }}</p>
+                        <p>{{ booking_info.booking_time }}</p>
+                        <div class="fix-height">
+                            <a href="#" class="title">{{ booking_info.room.name }}</a>
+                            <small>{{ booking_info.room.address }}</small>
+                        </div>
+                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-block btn-danger" onclick="popModal()">Cancel Booking </a>
+                    </figcaption>
+                </figure>
+            </div>
+        </div> <!-- col.// -->
+        {% endif %}
+    </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Are you sure you want to cancel the booking?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <label>Reason:</label>
+                            <textarea name="reason" class="form-control" placeholder="Enter text here..."></textarea>
+                        </div> <!-- form-group end.// --> 
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                        </div>
+                    </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+        function popModal(){
+            $('#exampleModalCenter').appendTo("body").modal('show');
+        }
+    </script>
+    {% endblock %}

@@ -1,0 +1,6 @@
+{% autoescape off %}
+
+Sorry {{ booking_person_name }}, your meeting room booking schedule named "{{ name }}" on "{{ booking_date_from  }}" to "{{ booking_date_to }}" at "{{ booking_time_from }} to {{ booking_time_to }}" was cancelled by "{{ admin_name }}" due to the reason of "{{ reason }}". 
+If you think it's not you, Please ignore the email.
+
+{% endautoescape %}

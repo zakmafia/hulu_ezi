@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:900px; margin-bottom:10px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">All leave requests (Approved)</h4>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="GET">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search User" name="keyword">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <br>
+        <a href="{% url 'export_report' %}" class="btn btn-light">Export Report</a>
+        <br>
+      </header>
+      <div class="scrollable">
+          {% if not leave_requests %}
+          No leave requests😊
+          {% endif %}
+          {% for leave_request in leave_requests %}
+          <div class="card" style="max-height:350px;">
+            <div class="card-body">
+              <p class="card-text">Name: <b>{{ leave_request.requester_name.first_name }} {{ leave_request.requester_name.last_name }}</b> ({{ leave_request.requester_name.email }}) </p>
+              <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
+              <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date }}</b></p>
+              <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
+              <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
+              {% if leave_request.manager_approved%}
+              <p class="text-success">Manager Accepted your request!</p>
+              {% endif %}
+              {% if leave_request.hr_approved%}
+              <p class="text-success">HR Accepted your request!</p>
+              {% endif %}
+              <a href="{% url 'detail_approved_user' leave_request.requester_name.id %}">View user all leave requests</a>
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+{% endblock %}

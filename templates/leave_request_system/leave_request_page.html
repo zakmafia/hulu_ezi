@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h3>Welcome To Leave Request System</h3>
+      </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-blue">
+                <div class="inner">
+                    <h4>Create Leave Request</h4>
+                    <p>Create your leave request</p>
+                </div>
+                <div class="icon">
+                    <i class="fab fa-meetup" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'create_leave_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 mx-auto">
+            <div class="card-box bg-green">
+                <div class="inner">
+                    <h4>View your leave request</h4>
+                    <p> View your leave request</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-marker" aria-hidden="true"></i>
+                </div>
+                <a href="{% url 'view_your_leave_request' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+       
+    </div>
+</div> <!-- container //  -->
+{% endblock %}

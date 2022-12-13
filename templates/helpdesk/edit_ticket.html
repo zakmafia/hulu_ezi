@@ -1,0 +1,84 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'manage_helpdesk' %}">Manage Help Desk</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'view_ticket' %}">View ticket</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit ticket</li>
+                </ol>
+              </nav>              
+        </div>
+    </div>
+</div>
+<div class="container">
+  <div class="row">
+      <div class="col text-center mx-auto">
+          <h3>Edit Ticket</h3>
+      </div>
+  </div>
+</div>
+<div class="container">
+    <div class="card mx-auto" style="max-width:500px; margin-bottom:7rem;">
+        <article class="card-body">
+            <form action="#" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Task</label>
+                    {{ form.task }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                  <label>Priority</label>
+                  {{ form.priority }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                  <label>Assigned Person</label>
+                  {{ form.assigned_person }}
+                </div> <!-- form-group end.// -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Allocated Date</label>
+                        {{ form.allocated_date }}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6">
+                        <label>Deadline</label>
+                        {{ form.deadline }}
+                    </div> <!-- form-group end.// -->
+                </div>
+                <div class="form-group">
+                  <label>Weight</label>
+                  {{ form.weight }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                  <label>Status</label>
+                  {{ form.status }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                  <label>Completion Date</label>
+                  {{ form.completion_date }}
+                </div> <!-- form-group end.// -->
+                {{ form.errors }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Edit Ticket </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+</div>
+<script>
+    $(function() {
+      $( ".datepicker" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "1900:2012",
+        todayHighlight: true,
+        autoclose: true,
+        startDate: new Date(),
+      });
+    });
+</script>
+{% endblock %}

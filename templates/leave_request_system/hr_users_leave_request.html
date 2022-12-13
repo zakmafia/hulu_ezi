@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mx-auto" style="max-width:700px; margin-bottom:10px;">
+    <article class="card-body">
+      <header class="mb-4"><h4 class="card-title">HR Approval</h4></header>
+      <div class="scrollable">
+          {% if not leave_request_list %}
+         Currently no user has created a leave request😊
+          {% endif %}
+          {% for leave_request in leave_request_list %}
+          <div class="card" style="max-height:300px;">
+            <div class="card-body">    
+            <p class="card-text">Full Name: <b>{{ leave_request.requester_name.first_name }} {{ leave_request.requester_name.last_name }} ({{ leave_request.requester_name.email }})</b></p>
+            <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
+            <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date }}</b></p>
+            <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
+            <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
+            <a href="{% url 'hr_approval_screen' leave_request.id %}">View Detail</a>
+            </div>
+          </div>
+            {% endfor %}
+      </div>
+      </article><!-- card-body.// -->
+  </div> <!-- card .// -->
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section">
+    <div class="container">
+        <h2 class="title-page text-center">Booked Meeting Room</h2>
+    </div> <!-- container //  -->
+    </section>
+    <div class="container">
+    
+    <div class="row">
+        {% if user_booking %}
+        {% for booking in user_booking %}
+        <div class="col-md-4 align-self-center">
+            <div class="card card-block">
+                <figure class="card card-product-grid">
+                    <div class="img-wrap"> 
+                        
+                        <img src="{{ booking.room.images.url }}">
+                        
+                    </div> <!-- img-wrap.// -->
+                    
+                    <figcaption class="info-wrap">
+                        <p>{{ booking.booking_date }}</p>
+                        <p>{{ booking.booking_time }}</p>
+                        <div class="fix-height">
+                            <a href="#" class="title">{{ booking.room.name }}</a>
+                            <small>{{ booking.room.address }}</small>
+                        </div>
+                        <a href="{% url 'cancel_booking' booking.id%}" class="btn btn-block btn-danger" onclick="return confirm('Are you sure you want to cancel this booking?')">Cancel Booking </a>
+                    </figcaption>
+                </figure>
+            </div>
+        </div> <!-- col.// -->
+        {% endfor %}
+        {% else %}
+            <div class="text-center">
+                You have no booking!
+            </div>
+        {% endif %}
+    
+    </div>
+    </div> 
+    {% endblock %}

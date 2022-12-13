@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HST Simple ERP</title>
+    <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+    <!-- Bootstrap4 files-->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.css' %}">
+    <!-- Font awesome 5 -->
+    <link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+    <!-- custom style -->
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/side_nav_style.css' %}" type="text/css">
+    <link href="{% static 'css/styles_card.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+    <!-- custom javascript -->
+    <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        /// some script
+        
+        // jquery ready start
+        $(document).ready(function() {
+            // jQuery code
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        }); 
+        // jquery end
+    </script>
+</head>
+<body>
+    {% include 'includes/navbar.html' %}
+    <!-- Page Content Holder -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="navbar-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        {% if user.id is None %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <small class="title text-muted">Welcome {{ user.first_name }}</small>
+                            <small> | </small>
+                        </li>
+                        <li class="nav-item">
+                            <small> | </small>
+                            <a href="{% url 'logout' %}"> Logout</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav> 
+        {% block content %}
+        {% endblock %}  
+        {% include 'includes/footer.html' %} 
+    </div>
+</div>
+
+    

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="title-page text-center">Your Bookings</h2>
+    </div>
+</section>
+<div class="card mx-auto" style="max-width:720px; margin-bottom:10px;">
+    <article class="card-body">
+      <header class="mb-4 text-center"><a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking</a></header>
+      {% include 'includes/alerts.html' %}
+      {% if not meeting_room_booking_info %}
+        Currently you have no bookings! Create a booking😊
+      {% endif %}
+      </article>
+</div>
+<div class="scrollable mx-auto" style="max-width:720px; margin-bottom:10px;">
+    {% for info in meeting_room_booking_info %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ info.name }}</h5>
+              <p class="card-text"><b>{{ info.booking_person.first_name }} {{ info.booking_person.last_name }} </b> on <b>{{ info.booking_date_from }}</b> to <b>{{ info.booking_date_to }}</b> at <b>{{ info.booking_time_from }}</b> to <b>{{ info.booking_time_to }}</b></p>
+              <a href="{% url 'cancel_booking_user' info.id %}">Cancel booking</a>
+            </div>
+          </div>
+    {% endfor %}
+    </div>
+{% endblock %}

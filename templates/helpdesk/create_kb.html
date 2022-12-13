@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'view_kb' %}">View KB</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Create KB</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col text-center mx-auto">
+            <h3>Create KB</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card mx-auto" style="max-width:520px; margin-bottom:7rem;">
+        <article class="card-body">
+            {% include 'includes/alerts.html' %}
+            <form action="#" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Select Category</label>
+                    {{ form.category }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <p>{{ form.non_field_errors }}</p>
+                    <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <label>Upload File</label>
+                    {{ form.docfile }}
+                </div> <!-- form-group end.// -->
+                {{ form.errors }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Create KB </button>
+                </div> <!-- form-group// -->
+            </form>
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+</div>
+{% endblock %}

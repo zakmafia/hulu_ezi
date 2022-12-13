@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <div class="card mx-auto" style="max-width:600px; margin-bottom:20px;">
+          <article class="card-body">
+            <header class="mb-4"><h4 class="card-title">Booking for {{ room.name }}</h4></header>
+            {% include 'includes/alerts.html' %}
+            <form action="{% url 'create_booking_from_room' room.id %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" placeholder="Name of the meeting" name="name" value="{{ name }}"/>
+                </div> <!-- form-group end.// -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>From Date:</label>
+                        <input class="form-control" id="date_from" name="from_date" placeholder="MM/DD/YYYY" type="text" value="{{booking_date_val_from}}"/>
+                    </div> <!-- form-group end.// --> 
+                    <div class="form-group col-md-6">
+                        <label>To Date:</label>
+                        <input class="form-control" id="date_to" name="to_date" placeholder="MM/DD/YYYY" type="text" value="{{booking_date_val_to}}"/>
+                    </div> <!-- form-group end.// --> 
+                </div>
+                    <div class="form-group">
+                        <label>Check Available Time: </label>
+                        <button type="submit" name="check_time" class="btn btn-success btn-block"> Check</button>
+                    </div> <!-- form-group end.// -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>From Time:</label>
+                        {% if available_time_list_from %}
+                        <select id="inputState1" class="form-control" name="from_time">
+                            {% for time in available_time_list_from %}
+                            <option>{{ time.available_time }}</option>
+                            {% endfor %}
+                        </select>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group col-md-6">
+                        <label>To Time:</label>
+                        {% if available_time_list_to %}
+                        <select id="inputState2" class="form-control" name="to_time">
+                            {% for time in available_time_list_to %}
+                            <option>{{ time.available_time }}</option>
+                            {% endfor %}
+                        </select>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
+                    {% if not available_time_list_from and not available_time_list_to %}
+                    <div class="form-group">
+                    <p>Select a date and click the Check Available Time button to display the Available Time for Booking</p>
+                    </div>
+                    {% endif %}    
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea name="description" class="form-control" placeholder="Enter text here..."></textarea>
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <button type="submit" name="book" class="btn btn-primary btn-block"> Book a Room  </button>
+                </div> <!-- form-group// -->     
+                </form>
+            </article><!-- card-body.// -->
+        </div> <!-- card .// -->
+        <script>
+            $(document).ready(function(){
+                var from_date_input=$('input[name="from_date"]'); //our date input has the name "from_date"
+                var to_date_input=$('input[name="to_date"]'); //our date input has the name "to_date"
+                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+                from_date_input.datepicker({
+                    format: 'yyyy-dd-mm',
+                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                    startDate: new Date(),
+                })
+                to_date_input.datepicker({
+                    format: 'yyyy-dd-mm',
+                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                    startDate: new Date(),
+                })
+        
+            })
+        </script>
+{% endblock %}

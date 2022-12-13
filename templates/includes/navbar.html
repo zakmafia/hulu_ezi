@@ -1,0 +1,106 @@
+{% load static %}
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header text-center">
+                <img src="{% static 'images/hst_logo_design.png'  %}" class="img-fluid rounded">
+                <h5><a href="{% url 'index' %}" class="color_a">HST Simple ERP</a></h5>
+            </div>
+            <ul class="list-unstyled components">
+                {% if user.is_authenticated %}
+                <li>
+                    <a class="color_a" href="{% url 'index' %}">Home</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="#bookingSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle color_a">Room Booking</a>
+                    <ul class="collapse list-unstyled" id="bookingSubmenu">
+                        {% if user.is_authenticated %}
+                        <li>
+                            <a class="color_a" href="{% url 'bookings' %}">Booking Page</a>
+                        </li>
+                        <li>
+                            <a class="color_a" href="{% url 'my_bookings' %}">My Bookings</a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a class="color_a" href="{% url 'create_booking' %}">Quick Booking</a>
+                        </li>
+                        {% if user.is_authenticated and user.is_superadmin %}
+                        <li>
+                            <a class="color_a" href="{% url 'view_rooms' %}">Manage Room</a>
+                        </li>
+                        <li>
+                            <a class="color_a" href="{% url 'view_available_times' %}">Manage Time</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% if user.is_authenticated %}
+                <li>
+                  <a href="#helpdeskSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle color_a">Help Desk</a>
+                  <ul class="collapse list-unstyled" id="helpdeskSubmenu">
+                      <li>
+                        <a class="color_a" href="{% url 'helpdesk_home' %}">Help Desk Page</a>
+                      </li>
+                      <li>
+                          <a class="color_a" href="{% url 'create_user_request' %}">Create a request</a>
+                      </li>
+                      <li>
+                          <a class="color_a" href="#">View your request</a>
+                      </li>
+                      {% if user.is_superadmin %}
+                      <li>
+                          <a class="color_a" href="{% url 'manage_helpdesk' %}">Manage Help Desk</a>
+                      </li>
+                      {% endif %}
+                  </ul>
+              </li>
+              <li>
+                <a href="#leaverequestSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle color_a">Leave Request</a>
+                <ul class="collapse list-unstyled" id="leaverequestSubmenu">
+                    <li>
+                        <a class="color_a" href="{% url 'leave_request_page' %}">Leave Request Page</a>
+                      </li>
+                    <li>
+                      <a class="color_a" href="{% url 'create_leave_request' %}">Create Leave Request</a>
+                    </li>
+                    <li>
+                        <a class="color_a" href="{% url 'view_your_leave_request' %}">View your Leave Request</a>
+                    </li>
+                    {% if user.is_admin %}
+                    <li>
+                      <a class="color_a" href="{% url 'users_leave_request' %}">Manager Approval</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_superadmin %}
+                    <li>
+                      <a class="color_a" href="{% url 'all_users_request' %}">View all leave request (Approved)</a>
+                    </li>
+                    <li>
+                      <a class="color_a" href="{% url 'hr_users_leave_request' %}">HR Approval</a>
+                    </li>
+                    <li>
+                        <a class="color_a" href="{% url 'view_leave_type' %}">Manage Leave Request</a>
+                    </li>
+                    <li>
+                        <a class="color_a" href="{% url 'manage_user' %}">Manage User</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </li>
+            {% endif %}
+            <li>
+                <a class="color_a" href="#">About</a>
+            </li>
+            </ul>
+        </nav>
+        
+<script>
+    $(document).ready(function(){
+        $('li').click(function() {
+        $("li.active").removeClass("active");
+        $(this).addClass('active');
+});    
+</script>
+        
