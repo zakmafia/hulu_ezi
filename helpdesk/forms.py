@@ -29,6 +29,9 @@ class StaffForm(ModelForm):
             'member': forms.Select(attrs={'class': 'form-control'}),
             'role': forms.Select(attrs={'class': 'form-control'})
         }
+    def __init__(self, *args, **kwargs):
+        super(StaffForm, self).__init__(*args, **kwargs)
+        self.fields['member'].label_from_instance = lambda obj: '%s %s | %s' % (obj.first_name, obj.last_name, obj.email)
 
 class IssueForm(ModelForm):
     class Meta:

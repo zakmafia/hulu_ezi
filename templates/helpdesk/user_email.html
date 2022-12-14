@@ -1,3 +1,3 @@
 {% autoescape off %}
-
+Hi, {{ first_name }} {{ last_name }} has encountered an Issue named : '{{ issue }}' with a description of : {% if description %} {{ description }} {% else %} No description {% endif %}. Please address the Issue. Email of user is {{ email }}
 {% endautoescape %}

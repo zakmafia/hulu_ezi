@@ -1,2 +1,3 @@
 django
 pillow
+django_autocomplete_light

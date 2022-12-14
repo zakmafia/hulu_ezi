@@ -27,7 +27,8 @@
           <th scope="col">Name</th>
           <th scope="col">Issue</th>
           <th scope="col">Other Issue</th>
-          <th scope="col">Issue Description</th>
+          <th scope="col">Issue Image</th>
+          <th scope="col">Detail</th>
         </tr>
       </thead>
       <tbody>
@@ -35,14 +36,23 @@
           <tr>
               <td>{{ user_request.requester.email }}</td>
               <td>{{ user_request.issue }}</td>
-              <td>{{ user_request.other_issue }}</td>
               <td>
-                {% if user_request.issue_description %}
-                {{ user_request.issue_description }}
+                {% if user_request.other_issue %}
+                {{ user_request.other_issue }}
                 {% else %}
-                NOT GIVEN
+                <b>NOT GIVEN</b>
                 {% endif %}
               </td>
+              <td>
+                {% if user_request.image %}
+                <a href="{{ user_request.image.url }}">
+                  <img src="{{ user_request.image.url }}" class="rounded" height="100" width="100">
+                </a>
+                {% else %}
+                <img src="{% static 'img/no_image.png' %}" class="rounded" height="100" width="100">
+                {% endif %}
+              </td>
+              <td><a href="{% url 'detail_my_request' user_request.id %}" class="btn btn-success">Detail</a></td>
           </tr>
           {% endfor %}
       </tbody>

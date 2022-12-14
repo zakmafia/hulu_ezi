@@ -18,11 +18,14 @@ urlpatterns = [
 
     path('create_issue/', views.create_issue, name='create_issue'),
     path('view_issue/', views.view_issue, name='view_issue'),
+    path('edit_issue/<issue_id>/', views.edit_issue, name='edit_issue'),
     path('delete_issue/<issue_id>/', views.delete_issue, name='delete_issue'),
 
     path('create_user_request/', views.create_user_request, name='create_user_request'),
     path('my_request/', views.my_request, name='my_request'),
     path('view_user_request/', views.view_user_request, name='view_user_request'),
+    path('detail_my_request/<my_request_id>/', views.detail_my_request, name='detail_my_request'),
+    path('detail_user_request/<user_request_id>/', views.detail_user_request, name='detail_user_request'),
 
     path('create_ticket/', views.create_ticket, name='create_ticket'),
     path('view_ticket/', views.view_ticket, name='view_ticket'),

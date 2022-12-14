@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models.query import QuerySet
 from django.contrib import messages
 from datetime import datetime
 from .models import Staff, Role, Priority, UserRequest, Issue, KnowledgeBase, KnowledgeCategory, Ticket
@@ -188,6 +189,27 @@ def view_issue(request):
         return redirect('helpdesk_home')
 
 @login_required(login_url='login')
+def edit_issue(request, issue_id):
+    if request.user.is_helpdesk_superadmin:
+        issue = Issue.objects.get(id=issue_id)
+        if request.method == 'POST':
+            form = IssueForm(request.POST, instance=issue)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You have successfully edited the issue')
+                return redirect('view_issue')
+            else:
+                messages.error(request, 'Something went wrong!')
+        else:
+            form = IssueForm(instance=issue)
+        context = {
+            'form': form
+        }
+        return render(request, 'helpdesk/edit_issue.html', context)
+    else:
+        return redirect('helpdesk_home')
+
+@login_required(login_url='login')
 def delete_issue(request, issue_id):
     if request.user.is_helpdesk_superadmin:
         issue = Issue.objects.get(id=issue_id)
@@ -202,11 +224,40 @@ def delete_issue(request, issue_id):
 @login_required(login_url='login')
 def create_user_request(request):
     if request.method == 'POST':
+        description = ''
         form = UserRequestForm(request.POST, request.FILES)
         if form.is_valid():
             user_request = form.save(commit=False)
             user_request.requester = request.user
-            user_request.save()
+            if user_request.issue:
+                issue = user_request.issue
+                assigned_to = Issue.objects.get(name=user_request.issue).assigned_to.member
+            elif user_request.other_issue:
+                issue = user_request.other_issue
+                assigned_to = Staff.objects.filter(role__name='Senior Technician')
+            if user_request.issue_description:
+                description = user_request.issue_description
+            mail_subject = 'You have a user issue request'
+            message = render_to_string('helpdesk/user_email.html', {
+                'issue': issue,
+                'description': description,
+                'email': request.user.email,
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name
+            })
+            if isinstance(assigned_to, QuerySet):
+                to_email = []
+                for item in assigned_to:
+                    to_email.append(item.member)
+                print(to_email)
+                send_email = EmailMessage(mail_subject, message, to=to_email) 
+                send_email.send()
+                user_request.save()
+            else:    
+                to_email = assigned_to  
+                send_email = EmailMessage(mail_subject, message, to=[to_email])
+                send_email.send()
+                user_request.save()
             messages.success(request, 'You have successfully created a request. You will hear from us shortly')
             return redirect('create_user_request')
         else:
@@ -230,6 +281,15 @@ def my_request(request):
     return render(request, 'helpdesk/my_request.html', context)
 
 @login_required(login_url='login')
+def detail_my_request(request, my_request_id):
+    my_request = UserRequest.objects.get(id=my_request_id)
+    context = {
+        'current_year': current_year,
+        'my_request': my_request
+    }
+    return render(request, 'helpdesk/detail_my_request.html', context)
+
+@login_required(login_url='login')
 def view_user_request(request):
     if request.user.is_helpdesk_admin:
         all_requests = UserRequest.objects.all().order_by('-id')
@@ -240,6 +300,17 @@ def view_user_request(request):
         return render(request, 'helpdesk/view_user_request.html', context)
     else:
         return redirect('helpdesk_home')
+
+@login_required(login_url='login')
+def detail_user_request(request, user_request_id):
+    if request.user.is_helpdesk_admin:
+        user_request = UserRequest.objects.get(id=user_request_id)
+        context = {
+            'current_year': current_year,
+            'user_request': user_request
+        }
+        return render(request, 'helpdesk/detail_user_request.html', context)
+
 
 # Tickets
 @login_required(login_url='login')

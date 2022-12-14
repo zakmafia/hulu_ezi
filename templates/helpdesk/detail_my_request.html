@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+                  <li class="breadcrumb-item"><a href="{% url 'my_request' %}">My Request</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">My request detail</li>
+                </ol>
+              </nav>              
+        </div>
+    </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col text-center mx-auto">
+        <h3>
+            {% if my_request.issue %}
+            {{ my_request.issue }}
+            {% else %}
+            {{ my_request.other_issue }}
+            {% endif %}
+        </h3>
+    </div>
+  </div>
+</div>
+{% endblock %}
