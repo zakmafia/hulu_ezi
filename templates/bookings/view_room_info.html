@@ -34,15 +34,15 @@
                 <div class="text-center" style="margin-top:10px;">
                     <a href="{% url 'create_booking_from_room' room.id%}" class="btn brn-block btn-primary">Create a Booking +</a>
                 </div>
-                <div class="card mx-auto" style="max-width:520px; margin-top:10px;">
-                    <article class="card-body">
-                      <header class="mb-4 text-center"><h4 class="card-title">{{ room.name }}</h4></header>
-                      {% include 'includes/alerts.html' %}
-                      {% if not meeting_room_booking_info %}
-                        This room is currently not booked! Be the first😊
-                      {% endif %}
-                      </article>
-                </div>
+                <br/>
+                <header class="mb-4 text-center"><h4 class="card-title">{{ room.name }}</h4></header>
+                <br/>
+                <header class="mb-4 text-center">
+                {% include 'includes/alerts.html' %}
+                    {% if not meeting_room_booking_info %}
+                     This room is currently not booked! Be the first😊
+                    {% endif %}
+                </header>
                 <div class="scrollable">
                 {% for info in meeting_room_booking_info %}
                       <div class="card">

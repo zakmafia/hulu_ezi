@@ -1,5 +1,6 @@
 from django import forms
 from .models import Account
+from .utils import validate_email_string
 
 class RegisterationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
@@ -14,8 +15,27 @@ class RegisterationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(RegisterationForm, self).clean()
+        email_data = cleaned_data.get('email')
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
+        email_domain_string = email_data.split('@')[0]
+        email_domain = email_data.split('@')[1]
+        email_domain_list = ["hst-et.com"]
+        if email_domain not in email_domain_list:
+            raise forms.ValidationError(
+                "Email is not in the HST Domain!"
+            )
+
+        if not validate_email_string(email_domain_string):
+            raise forms.ValidationError(
+                "Email is not in the HST Domain!"
+            )
+
+        
+        if not validate_email_string(email_domain_string):
+            raise forms.ValidationError(
+                "Not a Valid HST email for registeration!"
+            )
 
         if password != confirm_password:
             raise forms.ValidationError(

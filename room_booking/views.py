@@ -242,25 +242,12 @@ def create_booking(request):
             parsed_date_to = datetime.strptime(booking_date_to, "%Y-%d-%m").date()
             booking_date_val_from = booking_date_from
             booking_date_val_to = booking_date_to
-            current_time = datetime.now().time()
-            current_time_seconds = (current_time.hour * 60 + current_time.minute) * 60 + current_time.second
-            current_date = datetime.now().date()
             for available_time in available_times:
                 if not Booking.objects.filter(booking_time_from=available_time, booking_date_from=parsed_date_from,booking_date_to=parsed_date_to, room=room_instance):
-                    available_time_seconds = (available_time.available_time.hour * 60 + available_time.available_time.minute) * 60 + available_time.available_time.second
-                    if current_date == parsed_date_from:
-                        if not current_time_seconds > available_time_seconds:
-                            available_time_list_from.append(available_time)
-                    else:
-                        available_time_list_from.append(available_time)
+                    available_time_list_from.append(available_time)
             for available_time in available_times:
                 if not Booking.objects.filter(booking_time_to=available_time, booking_date_from=parsed_date_from,booking_date_to=parsed_date_to, room=room_instance):
-                    available_time_seconds = (available_time.available_time.hour * 60 + available_time.available_time.minute) * 60 + available_time.available_time.second
-                    if current_date == parsed_date_to:
-                        if not current_time_seconds > available_time_seconds:
-                            available_time_list_to.append(available_time)
-                    else:
-                        available_time_list_to.append(available_time)
+                    available_time_list_to.append(available_time)
         except:
             messages.error(request, 'Something went wrong!')
     context = {
@@ -354,15 +341,14 @@ def create_booking_from_room(request, room_id):
                     if send_email.send():
                         booking.save()
                     messages.success(request, 'You have successfully booked a meeting room')
-                    return HttpResponseRedirect('/bookings/view_room_information/' + room_id)
+                    return HttpResponseRedirect('/bookings/view_room_information/' + str(room_id))
                 else:
                     messages.error(request, 'Something went wrong! Try Again!')
-                    return HttpResponseRedirect('/bookings/create_booking_from_room/' + room_id)
-            except(TypeError, ValueError, OverflowError, Account.DoesNotExist) as e:
-                messages.error(request, e)
-                return HttpResponseRedirect('/bookings/create_booking_from_room/' + room_id)
+                    return HttpResponseRedirect('/bookings/create_booking_from_room/' + str(room_id))
+            except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+                return HttpResponseRedirect('/bookings/create_booking_from_room/' + str(room_id))
         except:
-            messages.error(request, 'Please fill all the necessary fields!')
+            pass
     if 'check_time' in request.POST:
         try:
             name = request.POST['name']
@@ -374,25 +360,12 @@ def create_booking_from_room(request, room_id):
             parsed_date_to = datetime.strptime(booking_date_to, "%Y-%d-%m").date()
             booking_date_val_from = booking_date_from
             booking_date_val_to = booking_date_to
-            current_time = datetime.now().time()
-            current_time_seconds = (current_time.hour * 60 + current_time.minute) * 60 + current_time.second
-            current_date = datetime.now().date()
             for available_time in available_times:
                 if not Booking.objects.filter(booking_time_from=available_time, booking_date_from=parsed_date_from,booking_date_to=parsed_date_to, room=room):
-                    available_time_seconds = (available_time.available_time.hour * 60 + available_time.available_time.minute) * 60 + available_time.available_time.second
-                    if current_date == parsed_date_from:
-                        if not current_time_seconds > available_time_seconds:
-                            available_time_list_from.append(available_time)
-                    else:
-                        available_time_list_from.append(available_time)
+                    available_time_list_from.append(available_time)
             for available_time in available_times:
                 if not Booking.objects.filter(booking_time_to=available_time, booking_date_from=parsed_date_from,booking_date_to=parsed_date_to, room=room):
-                    available_time_seconds = (available_time.available_time.hour * 60 + available_time.available_time.minute) * 60 + available_time.available_time.second
-                    if current_date == parsed_date_to:
-                        if not current_time_seconds > available_time_seconds:
-                            available_time_list_to.append(available_time)
-                    else:
-                        available_time_list_to.append(available_time)
+                    available_time_list_to.append(available_time)
         except BaseException as e:
             messages.error(request, e)
     context = {
@@ -512,7 +485,7 @@ def cancel_booking_admin(request, info_id, room_id):
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             if send_email.send():
                 booking_info.delete()
-                return HttpResponseRedirect('/bookings/view_room_information/' + room_id)
+                return HttpResponseRedirect('/bookings/view_room_information/' + str(room_id))
         context = {
             'booking_info': booking_info,
         }

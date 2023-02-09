@@ -29,7 +29,7 @@ SECRET_KEY = env('secret_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -126,10 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
-STATICFILES_DIRS = [
+if DEBUG:
+    STATICFILES_DIRS = [
     'hulu_ezi/static'
 ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 
 # media files configuration
 MEDIA_URL = '/media/'

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from asgiref.sync import sync_to_async
 from django.shortcuts import render, redirect
 from .forms import RegisterationForm
 from .models import Account
@@ -15,23 +16,29 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from .utils import email_checker
 
 # Create your views here.
 current_year = datetime.now().year
 
+@sync_to_async
 def register(request):
     if request.method == 'POST':
         form = RegisterationForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            phone_number = form.cleaned_data['phone_number']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            username = email.split("@")[0]
-            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
-            user.phone_number = phone_number
-            user.save()
+            if email_checker(form.cleaned_data['email']):
+                first_name = form.cleaned_data['first_name']
+                last_name = form.cleaned_data['last_name']
+                phone_number = form.cleaned_data['phone_number']
+                email = form.cleaned_data['email']
+                password = form.cleaned_data['password']
+                username = email.split("@")[0]
+                user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+                user.phone_number = phone_number
+                user.save()
+            else:
+                messages.error(request,"You are not a Valid HST Staff!")
+                return redirect('register')
 
             # User Activation
             current_site = get_current_site(request)
@@ -186,6 +193,24 @@ def edit_user(request, info_id):
         'current_year': current_year
     }
     return render(request, 'accounts/edit_user.html', context)
+
+# @login_required(login_url='login')
+# def edit_user_info(request, info_id):
+#     user = Account.objects.get(id=info_id)
+#     if request.method == 'POST':
+#         form = RegisterationForm(request.POST, instance=user)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'You have successfully edited the user')
+#             return redirect('manage_user')
+#         else:
+#             messages.error(request, 'Something went wrong!')
+#     else:
+#         form = RegisterationForm(intance=user)
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'accounts/edit_user.html', context)
 
 @login_required(login_url='login')
 def search_user(request):

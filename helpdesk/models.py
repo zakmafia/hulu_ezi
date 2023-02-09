@@ -5,7 +5,7 @@ from accounts.models import Account
 # Create your models here.
 
 class Priority(models.Model):
-    name = models.CharField('Priority', max_length=50)
+    name = models.CharField('Priority', max_length=50, unique=True)
 
     class Meta:
         verbose_name = 'priority'
@@ -15,14 +15,14 @@ class Priority(models.Model):
         return self.name
 
 class Role(models.Model):
-    name = models.CharField('Role', max_length=50)
+    name = models.CharField('Role', max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
 class Staff(models.Model):
-    member = models.ForeignKey(Account, on_delete=models.CASCADE)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    member = models.OneToOneField(Account, on_delete=models.CASCADE)
+    role = models.OneToOneField(Role, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'staff'
@@ -32,7 +32,7 @@ class Staff(models.Model):
         return self.member.email
 
 class Issue(models.Model):
-    name = models.CharField('Issue', max_length=50, default='Other')
+    name = models.CharField('Issue', max_length=50, unique=True)
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(Staff, on_delete=models.SET_NULL, null=True)
 
@@ -52,13 +52,13 @@ class UserRequest(models.Model):
         return self.requester.email
 
 class Weight(models.Model):
-    name = models.CharField('Weight Name', max_length=255)
+    name = models.CharField('Weight Name', max_length=255, unique=True)
 
     def __str__(self):
         return self.name
 
 class Status(models.Model):
-    name = models.CharField('Status Name', max_length=255)
+    name = models.CharField('Status Name', max_length=255, unique=True)
 
     class Meta:
         verbose_name = 'status'
@@ -81,7 +81,7 @@ class Ticket(models.Model):
         return self.task
 
 class KnowledgeCategory(models.Model):
-    name = models.CharField('Category', max_length=255)
+    name = models.CharField('Category', max_length=255, unique=True)
 
     class Meta:
         verbose_name = 'knowledge category'

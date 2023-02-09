@@ -2,29 +2,54 @@
 {% load static %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
-                  <li class="breadcrumb-item"><a href="{% url 'my_request' %}">My Request</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">My request detail</li>
-                </ol>
-              </nav>              
-        </div>
-    </div>
-</div>
-<div class="container">
   <div class="row">
-    <div class="col text-center mx-auto">
-        <h3>
-            {% if my_request.issue %}
-            {{ my_request.issue }}
-            {% else %}
-            {{ my_request.other_issue }}
-            {% endif %}
-        </h3>
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'my_request' %}">My Request</a></li>
+          <li class="breadcrumb-item active" aria-current="page">My request detail</li>
+        </ol>
+      </nav>
     </div>
   </div>
+</div>
+<div class="container">
+  <h3 class="text-center">Detail</h3>
+  <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+    <article class="card-body">
+      <div class="col form-group">
+        <label><b>Email: </b></label>
+        {{ my_request.requester.email }}
+      </div> <!-- form-group end.// -->
+      <div class="col form-group">
+        <label><b>Issue: </b></label>
+        {% if my_request.issue %} {{ my_request.issue }} {% else %} {{ my_request.other_issue }} {% endif %}
+      </div> <!-- form-group end.// -->
+      <div class="col form-group">
+        <label><b>Issue Image: </b></label>
+        <br>
+        {% if my_request.image %}
+        <a href="{{ my_request.image.url }}">
+          <img src="{{ my_request.image.url }}" class="rounded" height="100" width="100">
+        </a>
+        {% else %}
+        <img src="{% static 'img/no_image.png' %}" class="rounded" height="100" width="100">
+        {% endif %}
+      </div> <!-- form-group end.// -->
+      <div class="col form-group">
+        <label>Description</label>
+        <br>
+        <textarea name="description"cols="30" rows="10" readonly>
+          {% if my_request.issue_description %}
+          {{ my_request.issue_description }}
+          {% else %}
+          No Description
+          {% endif %}
+        </textarea>
+      </div> <!-- form-group end.// -->
+      
+    </article><!-- card-body.// -->
+  </div> <!-- card .// -->
 </div>
 {% endblock %}
