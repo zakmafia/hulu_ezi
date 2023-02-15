@@ -23,6 +23,8 @@ current_year = datetime.now().year
 
 @sync_to_async
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     if request.method == 'POST':
         form = RegisterationForm(request.POST)
         if form.is_valid():
@@ -62,6 +64,8 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('index')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -157,42 +161,42 @@ def resetPassword(request):
     else:    
         return render(request, 'accounts/resetPassword.html')
 
-@login_required(login_url='login')
-def manage_user(request):
-    users_info = Account.objects.all().order_by('-id')
-    context = {
-        'users_info': users_info,
-        'current_year': current_year
-    }
-    return render(request, 'accounts/manage_user.html', context)
+# @login_required(login_url='login')
+# def manage_user(request):
+#     users_info = Account.objects.all().order_by('-id')
+#     context = {
+#         'users_info': users_info,
+#         'current_year': current_year
+#     }
+#     return render(request, 'accounts/manage_user.html', context)
 
-@login_required(login_url='login')
-def edit_user(request, info_id):
-    user = Account.objects.get(id=info_id)
-    user_manager = user.manager if user.manager else ''
-    user_hr = user.hr if user.hr else ''
-    all_users = Account.objects.all()
-    if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        manager = request.POST['manager']
-        hr = request.POST['hr']
-        user.first_name = first_name
-        user.last_name = last_name
-        user.manager = manager
-        user.hr = hr
-        user.save()
-        messages.success(request, 'You have successfully edited the user!')
-        return redirect('manage_user')
-    context = {
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'all_users': all_users,
-        'user_manager': user_manager,
-        'user_hr': user_hr,
-        'current_year': current_year
-    }
-    return render(request, 'accounts/edit_user.html', context)
+# @login_required(login_url='login')
+# def edit_user(request, info_id):
+#     user = Account.objects.get(id=info_id)
+#     user_manager = user.manager if user.manager else ''
+#     user_hr = user.hr if user.hr else ''
+#     all_users = Account.objects.all()
+#     if request.method == 'POST':
+#         first_name = request.POST['first_name']
+#         last_name = request.POST['last_name']
+#         manager = request.POST['manager']
+#         hr = request.POST['hr']
+#         user.first_name = first_name
+#         user.last_name = last_name
+#         user.manager = manager
+#         user.hr = hr
+#         user.save()
+#         messages.success(request, 'You have successfully edited the user!')
+#         return redirect('manage_user')
+#     context = {
+#         'first_name': user.first_name,
+#         'last_name': user.last_name,
+#         'all_users': all_users,
+#         'user_manager': user_manager,
+#         'user_hr': user_hr,
+#         'current_year': current_year
+#     }
+#     return render(request, 'accounts/edit_user.html', context)
 
 # @login_required(login_url='login')
 # def edit_user_info(request, info_id):
@@ -212,15 +216,15 @@ def edit_user(request, info_id):
 #     }
 #     return render(request, 'accounts/edit_user.html', context)
 
-@login_required(login_url='login')
-def search_user(request):
-    users_info = Account.objects.all()
-    if 'keyword' in request.GET:
-        keyword = request.GET['keyword']
-        if keyword:
-            users_info = Account.objects.filter(first_name__contains=keyword).order_by('-id')
-    context = {
-        'users_info': users_info,
-        'current_year': current_year,
-    }
-    return render(request, 'accounts/manage_user.html', context)
+# @login_required(login_url='login')
+# def search_user(request):
+#     users_info = Account.objects.all()
+#     if 'keyword' in request.GET:
+#         keyword = request.GET['keyword']
+#         if keyword:
+#             users_info = Account.objects.filter(first_name__contains=keyword).order_by('-id')
+#     context = {
+#         'users_info': users_info,
+#         'current_year': current_year,
+#     }
+#     return render(request, 'accounts/manage_user.html', context)

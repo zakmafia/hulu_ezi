@@ -27,14 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
 INSTALLED_APPS = [
+    'clearcache',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 if DEBUG:
     STATICFILES_DIRS = [
     'hulu_ezi/static'
@@ -153,4 +154,11 @@ EMAIL_PORT = 587 # for gmail
 EMAIL_HOST_USER = env('email_host_user')
 EMAIL_HOST_PASSWORD = env('email_host_password')
 EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django_o365mail.EmailBackend'
 
+# O365_MAIL_CLIENT_ID = '9e16df43-3f15-4618-a888-02a3c0d40cd7'
+# O365_MAIL_CLIENT_SECRET = 'ffb8Q~ugno7SBtvmxLlynH3t81Fw0HhNV5xHadvi'
+# O365_MAIL_TENANT_ID = '7ad0a617-ae97-497b-800c-6f28efba7302'
+# O365_ACTUALLY_SEND_IN_DEBUG = True
+# O365_MAIL_ACCOUNT_KWARGS = {'token_backend': 'O365.utils.token.EnvTokenBackend'}
+# O365_MAIL_MAILBOX_KWARGS = {'resource': 'o365mailbox@domain.com'}

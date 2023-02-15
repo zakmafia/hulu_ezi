@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'bookings' %}">Main Booking Page</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'view_rooms' %}">View Rooms</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Room</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col text-center mx-auto">
+            <h3>Edit Room</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card mx-auto" style="max-width:520px; margin-bottom:7rem;">
+        <article class="card-body">
+            {% include 'includes/alerts.html' %}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Name</label>
+                    {{ form.name }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <label>Address</label>
+                    {{ form.address }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <label>Image</label>
+                    {{ form.images }}
+                </div> <!-- form-group end.// -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-block"> Edit Room</button>
+                </div> <!-- form-group// -->
+            </form>
+        </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+</div>
+</body>
+
+</html>
+{% endblock %}

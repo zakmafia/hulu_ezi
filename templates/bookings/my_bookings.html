@@ -17,21 +17,21 @@
 <div class="container">
     <h2 class="title-page text-center">Your Bookings</h2>
 </div>
-<div class="card mx-auto" style="max-width:720px; margin-bottom:10px;">
-    <article class="card-body">
-      <header class="mb-4 text-center"><a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking +</a></header>
-      {% include 'includes/alerts.html' %}
+<br/>
+<header class="mb-4 text-center"><a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking +</a></header>
+<br/>
+<header class="mb-4 text-center">
+  {% include 'includes/alerts.html' %}
       {% if not meeting_room_booking_info %}
         Currently you have no bookings! Create a booking😊
       {% endif %}
-      </article>
-</div>
+</header>
 <div class="scrollable mx-auto" style="max-width:720px; margin-bottom:10px;">
     {% for info in meeting_room_booking_info %}
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">{{ info.name }}</h5>
-              <p class="card-text"><b>{{ info.booking_person.first_name }} {{ info.booking_person.last_name }} </b> on <b>{{ info.booking_date_from }}</b> to <b>{{ info.booking_date_to }}</b> at <b>{{ info.booking_time_from }}</b> to <b>{{ info.booking_time_to }}</b></p>
+              <p class="card-text"><b>{{ info.booking_person.first_name }} {{ info.booking_person.last_name }} </b> on <b>{{ info.from_date }}</b> to <b>{{ info.to_date }}</b> at <b>{{ info.from_time }}</b> to <b>{{ info.to_time }}</b></p>
               <a href="{% url 'cancel_booking_user' info.id %}">Cancel booking</a>
             </div>
           </div>

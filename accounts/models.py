@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+import uuid
 # Create your models here.
 class MyAccountManager(BaseUserManager):
     def create_user(self, first_name, last_name, username, email, password=None):
@@ -65,6 +65,7 @@ class Account(AbstractBaseUser):
     is_leaverequest_superadmin = models.BooleanField(default=False)
     is_helpdesk_admin = models.BooleanField(default=False)
     is_helpdesk_superadmin = models.BooleanField(default=False)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']

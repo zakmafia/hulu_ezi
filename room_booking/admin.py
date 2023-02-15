@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, Booking, AvailableTime
+from .models import Room, Booking
 # Register your models here.
 
 @admin.register(Room)
@@ -11,13 +11,10 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('name', 'booking_date_from','booking_date_to', 'room', 'booking_person')
-    list_filter = ('room', 'booking_date_from', 'booking_date_to')
-    ordering = ('booking_date_from','booking_date_to')
+    list_display = ('name', 'from_date','to_date', 'room', 'booking_person')
+    list_filter = ('room', 'from_date', 'to_date')
+    ordering = ('from_date','to_date')
     search_fields = ('name', 'room')
 
-@admin.register(AvailableTime)
-class AvailableTimeAdmin(admin.ModelAdmin):
-    list_display = ('available_time',)
 
     

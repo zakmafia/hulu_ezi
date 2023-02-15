@@ -1,10 +1,12 @@
 from django.db import models
 from accounts.models import Account
+import uuid
 
 # Create your models here.
 class LeaveType(models.Model):
     leave_type = models.CharField('Leave Type',max_length=120, unique=True)
     detail = models.TextField('Detail', max_length=255, blank=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     def __str__(self):
         return self.leave_type
 
@@ -22,6 +24,7 @@ class LeaveRequest(models.Model):
     hr_approved = models.BooleanField('HR Approved', default=False)
     manager_comment = models.TextField('Manager Comment', max_length=255, blank=True)
     hr_comment = models.TextField('HR Comment', max_length=255, blank=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     def __str__(self):
         return self.title
 

@@ -1,4 +1,5 @@
 import os
+import uuid
 from django.db import models
 from django.conf import settings
 from accounts.models import Account
@@ -6,6 +7,7 @@ from accounts.models import Account
 
 class Priority(models.Model):
     name = models.CharField('Priority', max_length=50, unique=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = 'priority'
@@ -16,6 +18,7 @@ class Priority(models.Model):
 
 class Role(models.Model):
     name = models.CharField('Role', max_length=50, unique=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
         return self.name
@@ -23,6 +26,7 @@ class Role(models.Model):
 class Staff(models.Model):
     member = models.OneToOneField(Account, on_delete=models.CASCADE)
     role = models.OneToOneField(Role, on_delete=models.CASCADE)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = 'staff'
@@ -35,6 +39,7 @@ class Issue(models.Model):
     name = models.CharField('Issue', max_length=50, unique=True)
     priority = models.ForeignKey(Priority, on_delete=models.CASCADE)
     assigned_to = models.ForeignKey(Staff, on_delete=models.SET_NULL, null=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
         return self.name
@@ -47,18 +52,21 @@ class UserRequest(models.Model):
     issue_description = models.TextField('Issue Description', max_length=255, blank=True)
     image = models.ImageField('Image', upload_to='photos/user_requests', blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
         return self.requester.email
 
 class Weight(models.Model):
     name = models.CharField('Weight Name', max_length=255, unique=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
         return self.name
 
 class Status(models.Model):
     name = models.CharField('Status Name', max_length=255, unique=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = 'status'
@@ -76,12 +84,14 @@ class Ticket(models.Model):
     weight = models.ForeignKey(Weight, on_delete=models.CASCADE, blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     completion_date = models.DateField('Completion Date', blank=True, null=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
         return self.task
 
 class KnowledgeCategory(models.Model):
     name = models.CharField('Category', max_length=255, unique=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     class Meta:
         verbose_name = 'knowledge category'
@@ -93,6 +103,7 @@ class KnowledgeCategory(models.Model):
 class KnowledgeBase(models.Model):
     docfile = models.FileField(upload_to='documents/%Y/%m/%d')
     category = models.ForeignKey(KnowledgeCategory, on_delete=models.CASCADE)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     
     def __str__(self):
         return self.docfile.name

@@ -2,3 +2,5 @@ django==4.1.5
 pillow==9.4.0
 django-environ==0.9.0
 requests==2.28.2
+django-o365mail==1.1.0
+django-clearcache==1.2.1
