@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col mx-auto">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'bookings' %}">Bookings Page</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'my_bookings' %}">My Bookings</a></li>
+          <li class="breadcrumb-item active" aria-current="page">My Booking History</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container"> 
+    <h2 class="title-page text-center">Your Bookings History</h2>
+</div>
+<br/>
+<br>
+<header class="mb-4 text-center">
+  {% include 'includes/alerts.html' %}
+      {% if not meeting_room_booking_info %}
+        Currently you have no bookings! Create a booking😊
+      {% endif %}
+</header>
+<div class="scrollable mx-auto" style="max-width:720px; margin-bottom:10px;">
+    {% for info in meeting_room_booking_info %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ info.name }}</h5>
+              <p class="card-text"><b>{{ info.booking_person.first_name }} {{ info.booking_person.last_name }} </b> on <b>{{ info.from_date }}</b> to <b>{{ info.to_date }}</b> at <b>{{ info.from_time }}</b> to <b>{{ info.to_time }}</b></p>
+            </div>
+          </div>
+    {% endfor %}
+    </div>
+{% endblock %}

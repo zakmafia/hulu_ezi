@@ -23,6 +23,7 @@ class Booking(models.Model):
     description = models.TextField('Description',max_length=255, blank=True, null=True)
     booking_person = models.ForeignKey(Account, on_delete=models.SET_NULL, blank=True, null=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    active_booking = models.BooleanField('Active', default=True)
 
     def __str__(self):
         return self.name

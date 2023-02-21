@@ -23,8 +23,7 @@
                     {% csrf_token %}
                     <p class="card-text">Requester Name: <b>{{ leave_request.requester_name.first_name }} {{ leave_request.requester_name.last_name }}</b> ({{ leave_request.requester_name.email }})</p>
                     <p class="card-text">Title: <b>"{{ leave_request.title }}"</b></p>
-                    <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{ leave_request.to_date
-                            }}</b></p>
+                    <p class="card-text">From: <b>{{ leave_request.from_date }}</b> to <b>{{leave_request.to_date}}</b></p>
                     <p class="card-text">Leave Type: <b>{{ leave_request.leave_type }}</b></p>
                     <p class="card-text">Created at: <b>{{ leave_request.created_time }}</b></p>
                     <div class="form-group">

@@ -19,12 +19,10 @@
         <h3>Welcome To Leave Request System</h3>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-sm-6 mx-auto">
+        <div class="col-lg-3 col-sm-6 col-md-5">
             <div class="card-box bg-blue">
-                <div class="inner">
                     <h4>Create your Leave Request</h4>
                     <p>Create your leave request</p>
-                </div>
                 <div class="icon">
                     <i class="fas fa-location-arrow" aria-hidden="true"></i>
                 </div>
@@ -32,12 +30,10 @@
                         class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6 mx-auto">
-            <div class="card-box bg-green">
-                <div class="inner">
+        <div class="col-lg-3 col-sm-6 col-md-5">
+            <div class="card-box bg-blue">
                     <h4>View your Leave request</h4>
                     <p> View your leave request</p>
-                </div>
                 <div class="icon">
                     <i class="fas fa-reply" aria-hidden="true"></i>
                 </div>
@@ -46,12 +42,10 @@
             </div>
         </div>
         {% if user.is_leaverequest_admin %}
-        <div class="col-lg-3 col-sm-6 mx-auto">
-            <div class="card-box bg-green">
-                <div class="inner">
+        <div class="col-lg-3 col-sm-6 col-md-5">
+            <div class="card-box bg-blue">
                     <h4>Manager Approval</h4>
-                    <p>View users leave request to approve or decline their request</p>
-                </div>
+                    <p>Manager approval portal</p>
                 <div class="icon">
                     <i class="fa fa-tasks" aria-hidden="true"></i>
                 </div>
@@ -61,12 +55,10 @@
         </div>
         {% endif %}
         {% if user.is_leaverequest_superadmin %}
-        <div class="col-lg-3 col-sm-6 mx-auto">
-            <div class="card-box bg-orange">
-                <div class="inner">
+        <div class="col-lg-3 col-sm-6 col-md-5">
+            <div class="card-box bg-blue">
                     <h4>HR Approval</h4>
-                    <p>View users leave request to approve or decline their request</p>
-                </div>
+                    <p>HR approval portal</p>
                 <div class="icon">
                     <i class="fa fa-tasks" aria-hidden="true"></i>
                 </div>
@@ -74,12 +66,10 @@
                         class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6 mx-auto">
-            <div class="card-box bg-red">
-                <div class="inner">
-                    <h4>View all leave requests (Approved)</h4>
+        <div class="col-lg-3 col-sm-6 col-md-5">
+            <div class="card-box bg-blue">
+                    <h4>View all leave requests</h4>
                     <p>View all approved leave requests</p>
-                </div>
                 <div class="icon">
                     <i class="fas fa-sync-alt" aria-hidden="true"></i>
                 </div>
@@ -87,12 +77,10 @@
                         class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6 mx-auto">
-            <div class="card-box bg-light_blue">
-                <div class="inner">
+        <div class="col-lg-3 col-sm-6 col-md-5">
+            <div class="card-box bg-blue">
                     <h4>Manage Leave Request</h4>
                     <p>Manage leave request types</p>
-                </div>
                 <div class="icon">
                     <i class="fas fa-pen" aria-hidden="true"></i>
                 </div>
@@ -100,12 +88,10 @@
                         class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <div class="col-lg-3 col-sm-6 mx-auto">
-            <div class="card-box bg-light_red">
-                <div class="inner">
+        <div class="col-lg-3 col-sm-6 col-md-5">
+            <div class="card-box bg-blue">
                     <h4>Manage User</h4>
                     <p>Assign and edit Manager and HR to users</p>
-                </div>
                 <div class="icon">
                     <i class="fas fa-user-cog" aria-hidden="true"></i>
                 </div>

@@ -2,16 +2,16 @@
 {% load static %}
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Manage Help Desk</li>
-                </ol>
-              </nav>              
-        </div>
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'helpdesk_home' %}">Help Desk</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Manage Help Desk</li>
+        </ol>
+      </nav>
     </div>
+  </div>
 </div>
 <div class="container">
   <div class="text-center">
@@ -21,55 +21,49 @@
 <div class="container" style="margin-top: 2rem; margin-bottom: 7rem;">
   <div class="row">
     <div class="col-lg-3 col-sm-6 mx-auto">
-      <div class="card-box bg-green">
-        <div class="inner">
-          <h4>Manage Staff</h4>
-          <p>Create and manage staff by assigning different roles</p>
-        </div>
+      <div class="card-box bg-blue">
+
+        <h4>Manage Staff</h4>
+        <p>Create and manage staff by assigning different roles</p>
+
         <div class="icon">
-            <i class="fas fa-user-cog" aria-hidden="true"></i>
+          <i class="fas fa-user-cog" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_staff' %}" class="card-box-footer">Explore <i
-          class="fa fa-arrow-circle-right"></i></a>
+        <a href="{% url 'view_staff' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <div class="col-lg-3 col-sm-6 mx-auto">
-      <div class="card-box bg-orange">
-        <div class="inner">
-          <h4>Manage Role</h4>
-          <p>Create and manage different role types</p>
-        </div>
+      <div class="card-box bg-blue">
+
+        <h4>Manage Role</h4>
+        <p>Create and manage different role types</p>
+
         <div class="icon">
-            <i class="fa fa-tasks" aria-hidden="true"></i>
+          <i class="fa fa-tasks" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_role' %}" class="card-box-footer">Explore <i
-          class="fa fa-arrow-circle-right"></i></a>
+        <a href="{% url 'view_role' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <div class="col-lg-3 col-sm-6 mx-auto">
-      <div class="card-box bg-red">
-        <div class="inner">
-          <h4>Manage Priority</h4>
-          <p>Create and manage different priority types</p>
-        </div>
+      <div class="card-box bg-blue">
+
+        <h4>Manage Priority</h4>
+        <p>Create and manage different priority types</p>
+
         <div class="icon">
-            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          <i class="fas fa-sync-alt" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_priority' %}" class="card-box-footer">Explore <i
-          class="fa fa-arrow-circle-right"></i></a>
+        <a href="{% url 'view_priority' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <div class="col-lg-3 col-sm-6 mx-auto">
-      <div class="card-box bg-light_red">
-        <div class="inner">
-          <h4>Manage Issue</h4>
-          <p>Create and manage different issue types</p>
-        </div>
+      <div class="card-box bg-blue">
+        <h4>Manage Issue</h4>
+        <p>Create and manage different issue types</p>
         <div class="icon">
-            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
         </div>
-        <a href="{% url 'view_issue' %}" class="card-box-footer">Explore <i
-          class="fa fa-arrow-circle-right"></i></a>
+        <a href="{% url 'view_issue' %}" class="card-box-footer">Explore <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
   </div>

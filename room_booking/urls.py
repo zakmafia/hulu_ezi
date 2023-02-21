@@ -16,4 +16,6 @@ urlpatterns = [
     path('cancel_booking/<str:booking_id>/', views.cancel_booking, name='cancel_booking'),
     path('cancel_booking_user/<str:info_id>/', views.cancel_booking_user, name='cancel_booking_user'),
     path('cancel_booking_admin/<str:info_id>/<str:room_id>/', views.cancel_booking_admin, name='cancel_booking_admin'),
+
+    path('view_history/', views.view_history, name='view_history'),
 ]

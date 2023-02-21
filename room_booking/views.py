@@ -101,9 +101,10 @@ def delete_room(request, room_id):
     else:
         return redirect('bookings')
 
+@login_required(login_url='login')
 def view_room_information(request, room_id):
     room = Room.objects.get(id=room_id)
-    meeting_room_booking_info = Booking.objects.filter(room=room).order_by('-id')
+    meeting_room_booking_info = Booking.objects.filter(room=room, active_booking=True).order_by('-id')
     context = {
         'room': room,
         'meeting_room_booking_info': meeting_room_booking_info,
@@ -112,8 +113,17 @@ def view_room_information(request, room_id):
     return render(request, 'bookings/view_room_info.html', context)
 
 @login_required(login_url='login')
-def my_bookings(request):
+def view_history(request):
     meeting_room_booking_info = Booking.objects.filter(booking_person=request.user)
+    context = {
+        'current_year': current_year,
+        'meeting_room_booking_info': meeting_room_booking_info,
+    }
+    return render(request, 'bookings/view_history.html', context)
+
+@login_required(login_url='login')
+def my_bookings(request):
+    meeting_room_booking_info = Booking.objects.filter(booking_person=request.user, active_booking=True)
     context = {
         'current_year': current_year,
         'meeting_room_booking_info': meeting_room_booking_info,

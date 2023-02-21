@@ -249,7 +249,6 @@ def create_user_request(request):
                 to_email = []
                 for item in assigned_to:
                     to_email.append(item.member)
-                print(to_email)
                 send_email = EmailMessage(mail_subject, message, to=to_email) 
                 send_email.send()
                 user_request.save()

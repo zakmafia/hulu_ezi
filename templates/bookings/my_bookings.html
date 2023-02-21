@@ -18,7 +18,10 @@
     <h2 class="title-page text-center">Your Bookings</h2>
 </div>
 <br/>
-<header class="mb-4 text-center"><a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking +</a></header>
+<header class="mb-4 text-center">
+  <a class="btn btn-outline-primary" href="{% url 'bookings' %}">Create a booking +</a>
+  <a class="btn btn-outline-success" href="{% url 'view_history' %}">View History</a>
+</header>
 <br/>
 <header class="mb-4 text-center">
   {% include 'includes/alerts.html' %}

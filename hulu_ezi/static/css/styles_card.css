@@ -13,9 +13,6 @@
     transition: 1s;
     -webkit-transition: 1s;
 }
-.card-box .inner {
-    padding: 5px 10px 0 10px;
-}
 .card-box h3 {
     font-size: 27px;
     font-weight: bold;
